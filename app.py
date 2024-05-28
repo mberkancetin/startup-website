@@ -7,7 +7,6 @@ Please complete the form to see the startup success prediction.
 ''')
 
 
-"""
 founded_date = st.date_input('The company founded year',
                                 datetime.date(2019, 7, 6))
 
@@ -81,7 +80,7 @@ industry = st.selectbox('Select industry', ['Sustainability',
                         'Platforms',
                         'Music and Audio',
                         'Social Impact'])
-"""
-# social_activity = st.checkbox(['LinkedIn', 'Website', 'Twitter', 'Facebook',
-#                         'Phone Number', 'Contact Email'])
-# total_funding = st.number_input('Total Funding Amount (in USD)', min_value=0)
+
+social_activity = st.checkbox(['LinkedIn', 'Website', 'Twitter', 'Facebook',
+                        'Phone Number', 'Contact Email'])
+total_funding = st.number_input('Total Funding Amount (in USD)', min_value=0)
