@@ -2,12 +2,15 @@ import streamlit as st
 import requests
 import datetime
 
+st.markdown('''
+Please complete the form to see the startup success prediction.
+''')
 
 
-
+"""
 founded_date = st.date_input('The company founded year',
                                 datetime.date(2019, 7, 6))
-"""
+
 location = st.selectbox("Select location", ['Baden-Wurttemberg',
                         'Bayern',
                         'Berlin',
