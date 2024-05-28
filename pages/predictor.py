@@ -2,6 +2,10 @@ import streamlit as st
 import requests
 import datetime
 
+
+if st.button("Home"):
+    st.switch_page("../app.py")
+
 st.markdown('''
 Please complete the form to see the startup success prediction.
 ''')
@@ -94,12 +98,6 @@ with st.form("User input form", clear_on_submit=True, border=True):
     social_activity_fb = st.checkbox('Facebook')
 
     st.form_submit_button(label="Submit")
-
-col1, col2 = st.columns(2)
-
-with col2:
-    if st.button("Home"):
-        st.switch_page("../app.py")
 
 params = {
     "founded_date": founded_date,
