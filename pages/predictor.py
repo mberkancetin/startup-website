@@ -4,7 +4,7 @@ import datetime
 
 
 if st.button("Home"):
-    st.switch_page("/")
+    st.switch_page("app.py")
 
 st.markdown('''
 Please complete the form to see the startup success prediction.
