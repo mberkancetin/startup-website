@@ -81,6 +81,10 @@ industry = st.selectbox('Select industry', ['Sustainability',
                         'Music and Audio',
                         'Social Impact'])
 
-social_activity = st.checkbox(['LinkedIn', 'Website', 'Twitter', 'Facebook',
-                        'Phone Number', 'Contact Email'])
+social_activity_ln = st.checkbox('LinkedIn')
+social_activity_wb = st.checkbox('Website')
+social_activity_tw = st.checkbox('Twitter')
+social_activity_fb = st.checkbox('Facebook')
+social_activity_ph = st.checkbox('Phone Number')
+social_activity_em = st.checkbox('Contact Email')
 total_funding = st.number_input('Total Funding Amount (in USD)', min_value=0)
