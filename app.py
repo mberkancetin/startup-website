@@ -1,7 +1,7 @@
 import streamlit as st
 import requests
 
-st.logo("startorb.jpg")
+# st.logo("startorb.jpg")
 
 st.markdown('''
             ## StartOrb: Unlocking Tomorrow's Success Today
