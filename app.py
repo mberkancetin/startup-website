@@ -4,7 +4,7 @@ import requests
 st.logo("startorb.jpg")
 
 st.markdown('''
-            ## StartOrb: Unlocking Tomorrow’s Success Today
+            ## StartOrb: Unlocking Tomorrow's Success Today
             Harness the Power of Data to Illuminate Your Startup Journey
 ''')
 
