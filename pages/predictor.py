@@ -551,7 +551,7 @@ if submission_button:
         "has_grant": bool(has_grant),
     }
     st.write(params)
-    url = "http://127.0.0.1:8000/"
+    url = "http://127.0.0.1:8000"
     response = requests.get(url=url)
     st.write(str(response.json))
 else:
