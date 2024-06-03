@@ -14,22 +14,23 @@ with st.form("User input form", clear_on_submit=True, border=True):
     founded_date = st.date_input('The company founded year',
                                     datetime.date(2019, 7, 6))
     month_founded = ((pd.to_datetime('today') - pd.to_datetime(founded_date)).dt.days / 30.44).astype(int)
+
     location = st.selectbox("Select region", ['Baden-Wurttemberg',
-                            'Bayern',
-                            'Berlin',
-                            'Brandenburg',
-                            'Bremen',
-                            'Hamburg',
-                            'Hessen',
-                            'Mecklenburg-Vorpommern',
-                            'Niedersachsen',
-                            'Nordrhein-Westfalen',
-                            'Rheinland-Pfalz',
-                            'Saarland',
-                            'Sachsen',
-                            'Sachsen-Anhalt',
-                            'Schleswig-Holstein',
-                            'Thuringen'])
+                                                'Bayern',
+                                                'Berlin',
+                                                'Brandenburg',
+                                                'Bremen',
+                                                'Hamburg',
+                                                'Hessen',
+                                                'Mecklenburg-Vorpommern',
+                                                'Niedersachsen',
+                                                'Nordrhein-Westfalen',
+                                                'Rheinland-Pfalz',
+                                                'Saarland',
+                                                'Sachsen',
+                                                'Sachsen-Anhalt',
+                                                'Schleswig-Holstein',
+                                                'Thuringen'])
     city_dict = {'Hessen': ['Sulzbach',
                             'Marburg',
                             'Dreieich',
@@ -51,7 +52,7 @@ with st.form("User input form", clear_on_submit=True, border=True):
                             'Breuna',
                             'Oberursel',
                             'Eschborn'],
-                            'Schleswig-Holstein': ['Weißenhaus',
+                'Schleswig-Holstein': ['Weißenhaus',
                             'Kiel',
                             'Neumünster',
                             'Flensburg',
@@ -64,7 +65,7 @@ with st.form("User input form", clear_on_submit=True, border=True):
                             'Schenefeld',
                             'Kaltenkirchen',
                             'Norderstedt'],
-                            'Baden-Wurttemberg': ['Pfullendorf',
+                'Baden-Wurttemberg': ['Pfullendorf',
                             'Ulm',
                             'Heilbronn',
                             'Freiburg Im Breisgau',
@@ -98,7 +99,7 @@ with st.form("User input form", clear_on_submit=True, border=True):
                             'Wendelsheim',
                             'Mannheim',
                             'Esslingen'],
-                            'Niedersachsen': ['Osnabrück',
+                'Niedersachsen': ['Osnabrück',
                             'Jelmstorf',
                             'Norwegen',
                             'Munster',
@@ -115,7 +116,7 @@ with st.form("User input form", clear_on_submit=True, border=True):
                             'Brunswick',
                             'Oldenburg',
                             'Braunschweig'],
-                            'Rheinland-Pfalz': ['Kaiserslautern',
+                'Rheinland-Pfalz': ['Kaiserslautern',
                             'Bingen',
                             'Speyer',
                             'Deuselbach',
@@ -126,7 +127,7 @@ with st.form("User input form", clear_on_submit=True, border=True):
                             'Urbar',
                             'Föhren',
                             'Mainz'],
-                            'Bayern': ['Weißenburg In Bayern',
+                'Bayern': ['Weißenburg In Bayern',
                             'Garching',
                             'Baierbrunn',
                             'Weßling',
@@ -187,7 +188,7 @@ with st.form("User input form", clear_on_submit=True, border=True):
                             'Pfaffenhofen An Der Glonn',
                             'München',
                             'Planegg'],
-                            'Nordrhein-Westfalen': ['Bonn',
+                'Nordrhein-Westfalen': ['Bonn',
                             'Jülich',
                             'Düsseldorf',
                             'Wuppertal',
@@ -219,7 +220,7 @@ with st.form("User input form", clear_on_submit=True, border=True):
                             'Herdecke',
                             'Gütersloh',
                             'Wesseling'],
-                            'Brandenburg': ['Wildau',
+                'Brandenburg': ['Wildau',
                             'Schönefeld',
                             'Bernau',
                             'Bestensee',
@@ -229,7 +230,7 @@ with st.form("User input form", clear_on_submit=True, border=True):
                             'Hennigsdorf',
                             'Potsdam',
                             'Marienwerder'],
-                            'Sachsen': ['Deutsch',
+                'Sachsen': ['Deutsch',
                             'Dresden',
                             'Zwickau',
                             'Chemnitz',
@@ -239,22 +240,27 @@ with st.form("User input form", clear_on_submit=True, border=True):
                             'Ebersbach',
                             'Radebeul',
                             'Mittweida'],
-                            'Hamburg': ['Hamburg'],
-                            'Sachsen-Anhalt': ['Ostrau', 'Leuna', 'Halle', 'Magdeburg', 'Hessen'],
-                            'Thuringen': ['Suhl', 'Jena', 'Weimar', 'Ilmenau'],
-                            'Saarland': ['Sankt Wendel', 'Friedrichsthal', 'Saarbrücken'],
-                            'Berlin': ['Kreuzberg',
+                'Hamburg': ['Hamburg'],
+                'Sachsen-Anhalt': ['Ostrau',
+                                   'Leuna', 'Halle', 'Magdeburg', 'Hessen'],
+                'Thuringen': ['Suhl',
+                              'Jena', 'Weimar', 'Ilmenau'],
+                'Saarland': ['Sankt Wendel',
+                             'Friedrichsthal', 'Saarbrücken'],
+                'Berlin': ['Kreuzberg',
                             'Adlershof',
                             'Gartenfeld',
                             'Prenzlauer Berg',
                             'Berlin'],
-                            'Mecklenburg-Vorpommern': ['Schwerin',
+                'Mecklenburg-Vorpommern': ['Schwerin',
                             'Greifswald',
                             'Rostock',
                             'Murchin',
                             'Stralsund'],
-                            'Bremen': ['Bremen']}
+                'Bremen': ['Bremen']}
+
     location_city = st.selectbox("Select location", city_dict[location])
+
     german_cities = {
         'Pullach': {'lat': 48.0675, 'lon': 11.5231},
         'Rosbach Vor Der Höhe': {'lat': 50.2833, 'lon': 8.6833},
@@ -491,13 +497,30 @@ with st.form("User input form", clear_on_submit=True, border=True):
         'Gars': {'lat': 48.1532, 'lon': 12.5309}, # Approximate coordinates
         'Tutzing': {'lat': 47.9086, 'lon': 11.2798},
     }
+
     lat_city = float(german_cities[location_city]["lat"])
+
     lon_city = float(german_cities[location_city]["lon"])
+
     company_size = st.radio('Select company size',
                             ('10001+', '1001-5000',
                                 '101-250', '11-50',
                                 '251-500', '5001-10000',
                             '501-1000', '51-100'))
+
+    no_founders = st.number_input("Please indicate the number of founders",
+                                  min_value=1.0)
+
+    funding_status = st.radio('Select the most recent investment stage',
+                              ("Pre-Seed", "Seed", "Series A",
+                               "Series B", "Series C", "Further Stages"))
+
+    revenue_range = st.radio('Select revenue range',
+                            ('Less than $1M', '$1M to $10M',
+                             '$10M to $50M', '$50M to $100M',
+                             '$100M to $500M', '$500M to $1B',
+                             '$1B to $10B', '$10B+'))
+
     industry = st.selectbox('Select industry', ['Sustainability',
                             'Navigation and Mapping',
                             'Advertising',
@@ -551,14 +574,12 @@ with st.form("User input form", clear_on_submit=True, border=True):
     total_funding = st.number_input('Total Funding Amount (in USD)', min_value=0)
 
     st.markdown('''
-                Please indicate the channels of social activity.
+                Please indicate the other sources of financing.
                 ''')
-    # social_activity_wb = st.checkbox('Website')
-    # social_activity_ph = st.checkbox('Phone Number')
-    # social_activity_em = st.checkbox('Contact Email')
-    # social_activity_ln = st.checkbox('LinkedIn')
-    # social_activity_tw = st.checkbox('Twitter')
-    # social_activity_fb = st.checkbox('Facebook')
+
+    has_debt_financing = st.checkbox('Has the company received Debt Financing?')
+
+    has_grant = st.checkbox('Has the company received Grant?')
 
 
 
@@ -567,14 +588,13 @@ with st.form("User input form", clear_on_submit=True, border=True):
         "lat": lat_city,
         "lon": lon_city,
         "company_size": company_size,
+        "no_founders": float(no_founders),
         "industry_groups": industry,
+        "funding_status": funding_status,
+        "revenue_range": revenue_range,
         "total_funding": total_funding,
-        # 'website': social_activity_wb,
-        # 'phone': social_activity_ph,
-        # 'email': social_activity_em,
-        # 'linkedin': social_activity_ln,
-        # 'twitter': social_activity_tw,
-        # 'facebook': social_activity_fb
+        "has_debt_financing": has_debt_financing,
+        "has_grant": has_grant,
     }
 
     app_uri = "http://127.0.0.1:8000/predict"
@@ -582,6 +602,7 @@ with st.form("User input form", clear_on_submit=True, border=True):
     response = requests.get(app_uri, params=params).json
 
     if st.form_submit_button(label="Submit"):
+        st.write(params)
         st.write(response)
     else:
         st.write('Please submit to see the prediction')
