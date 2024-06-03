@@ -21,3 +21,11 @@ with col1:
 with col2:
     if st.button("Ecosystem Benchmarks"):
         st.switch_page("pages/benchmarks.py")
+
+
+
+
+
+
+
+
