@@ -603,10 +603,8 @@ with st.form("User input form", clear_on_submit=True, border=True):
 
     submission_button = st.form_submit_button(label="Submit")
 
-    submission_button
-
-if submission_button:
-    st.write(params)
-    st.write(response)
-else:
-    st.write('Please submit to see the prediction')
+    if submission_button:
+        st.write(params)
+        st.write(response)
+    else:
+        st.write('Please submit to see the prediction')
