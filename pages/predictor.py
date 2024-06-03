@@ -537,7 +537,21 @@ has_debt_financing = st.checkbox('Debt Financing')
 has_grant = st.checkbox('Grant')
 submission_button = st.button(label="Submit")
 if submission_button:
-    params = (
+    params = {
+        "months_since_founded": int(month_founded),
+        "lat": float(lat_city),
+        "lon": float(lon_city),
+        "company_size": str(company_size),
+        "no_founders": float(no_founders),
+        "industry_groups": str(industry),
+        "funding_status": str(funding_status),
+        "revenue_range": str(revenue_range),
+        "total_funding": float(total_funding),
+        "has_debt_financing": bool(has_debt_financing),
+        "has_grant": bool(has_grant),
+    }
+    """
+        params = (
         int(month_founded),
         float(lat_city),
         float(lon_city),
@@ -550,6 +564,7 @@ if submission_button:
         bool(has_debt_financing),
         bool(has_grant),
     )
+    """
     st.write(params)
     url = "http://127.0.0.1:8000/predict"
     response = requests.get(url=url, params=params)
