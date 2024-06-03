@@ -551,8 +551,8 @@ if submission_button:
         "has_grant": bool(has_grant),
     }
     st.write(params)
-    url = "http://127.0.0.1:8000"
-    response = requests.get(url=url)
+    url = "http://127.0.0.1:8000/predict"
+    response = requests.get(url=url, params=params)
     st.write(str(response.json))
 else:
     st.write('Please submit to see the prediction')
