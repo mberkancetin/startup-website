@@ -501,8 +501,8 @@ company_size = st.selectbox('Select company size',
                             '101-250', '11-50',
                             '251-500', '5001-10000',
                         '501-1000', '51-100'])
-no_founders = st.number_input("Please indicate the number of founders",
-                                min_value=1.0)
+no_founders = st.number_input("Number of founders",
+                                min_value=1, step=1)
 funding_status = st.selectbox('Select the most recent investment stage',
                             ["Pre-Seed", "Seed", "Series A",
                             "Series B", "Series C", "Further Stages"])
@@ -564,8 +564,8 @@ total_funding = st.number_input('Total Funding Amount (in USD)', min_value=0)
 st.markdown('''
             Please indicate the other sources of financing.
             ''')
-has_debt_financing = st.checkbox('Has the company received Debt Financing?')
-has_grant = st.checkbox('Has the company received Grant?')
+has_debt_financing = st.checkbox('Debt Financing')
+has_grant = st.checkbox('Grant')
 params = {
     "months_since_founded": month_founded,
     "lat": lat_city,
@@ -579,7 +579,7 @@ params = {
     "has_debt_financing": has_debt_financing,
     "has_grant": has_grant,
 }
-app_uri = "http://127.0.0.1:8000/predict"
+app_uri = "http://127.0.0.1:8000/predict/"
 response = requests.get(app_uri, params=params).json
 submission_button = st.button(label="Submit")
 if submission_button:
