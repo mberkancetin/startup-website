@@ -576,8 +576,8 @@ params = {
     "funding_status": funding_status,
     "revenue_range": revenue_range,
     "total_funding": total_funding,
-    "has_debt_financing": has_debt_financing,
-    "has_grant": has_grant,
+    "has_debt_financing": bool(has_debt_financing),
+    "has_grant": bool(has_grant),
 }
 submission_button = st.button(label="Submit")
 if submission_button:
