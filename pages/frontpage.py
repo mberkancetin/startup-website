@@ -1,16 +1,17 @@
 import streamlit as st
 
-# Page Configuration
-st.set_page_config(page_title="Startup Success Predictor", layout="wide")
+st.set_page_config(page_title="Startup Success Predictor", page_icon="🚀")
 
-# Navigation
+st.title("Willkommen zur Startup Success Predictor App")
+st.write("""
+Diese App hilft Startups und Investoren, den Erfolg von Startups zu bewerten und zu benchmarken.
+Navigieren Sie durch die verschiedenen Seiten, um mehr zu erfahren.
+""")
+
 st.sidebar.title("Navigation")
-page = st.sidebar.radio("Go to", ["Home", "Benchmarks", "Predictor", "Visualizations", "About"])
+st.sidebar.markdown("[Benchmarks](pages/benchmarks.py)")
+st.sidebar.markdown("[Predictor](pages/predictor.py)")
+st.sidebar.markdown("[Visualisierungen](pages/visualizations.py)")
+st.sidebar.markdown("[Über uns](pages/about.py)")
 
-# Home Page
-if page == "Home":
-    st.title("Welcome to the Startup Success Predictor")
-    st.write("""
-    This app helps startups and investors benchmark their performance and predict the likelihood of success based on industry data.
-    Navigate through the sections to explore various features.
-    """)
+
