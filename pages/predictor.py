@@ -601,8 +601,12 @@ with st.form("User input form", clear_on_submit=True, border=True):
 
     response = requests.get(app_uri, params=params).json
 
-    if st.form_submit_button(label="Submit"):
-        st.write(params)
-        st.write(response)
-    else:
-        st.write('Please submit to see the prediction')
+    submission_button = st.form_submit_button(label="Submit")
+
+    submission_button
+
+if submission_button:
+    st.write(params)
+    st.write(response)
+else:
+    st.write('Please submit to see the prediction')
