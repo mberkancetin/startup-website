@@ -569,21 +569,21 @@ has_grant = st.checkbox('Grant')
 submission_button = st.button(label="Submit")
 if submission_button:
     params = {
-        "months_since_founded": month_founded,
-        "lat": lat_city,
-        "lon": lon_city,
-        "company_size": company_size,
+        "months_since_founded": int(month_founded),
+        "lat": float(lat_city),
+        "lon": float(lon_city),
+        "company_size": str(company_size),
         "no_founders": float(no_founders),
-        "industry_groups": industry,
-        "funding_status": funding_status,
-        "revenue_range": revenue_range,
-        "total_funding": total_funding,
+        "industry_groups": str(industry),
+        "funding_status": str(funding_status),
+        "revenue_range": str(revenue_range),
+        "total_funding": float(total_funding),
         "has_debt_financing": bool(has_debt_financing),
         "has_grant": bool(has_grant),
     }
+    st.write(params)
     url = "http://127.0.0.1:8000/predict"
     response = requests.get(url, params=params).json
-    st.write(params)
     st.write(str(response))
 else:
     st.write('Please submit to see the prediction')
