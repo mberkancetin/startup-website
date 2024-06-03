@@ -566,21 +566,21 @@ st.markdown('''
             ''')
 has_debt_financing = st.checkbox('Debt Financing')
 has_grant = st.checkbox('Grant')
-params = {
-    "months_since_founded": month_founded,
-    "lat": lat_city,
-    "lon": lon_city,
-    "company_size": company_size,
-    "no_founders": float(no_founders),
-    "industry_groups": industry,
-    "funding_status": funding_status,
-    "revenue_range": revenue_range,
-    "total_funding": total_funding,
-    "has_debt_financing": bool(has_debt_financing),
-    "has_grant": bool(has_grant),
-}
 submission_button = st.button(label="Submit")
 if submission_button:
+    params = {
+        "months_since_founded": month_founded,
+        "lat": lat_city,
+        "lon": lon_city,
+        "company_size": company_size,
+        "no_founders": float(no_founders),
+        "industry_groups": industry,
+        "funding_status": funding_status,
+        "revenue_range": revenue_range,
+        "total_funding": total_funding,
+        "has_debt_financing": bool(has_debt_financing),
+        "has_grant": bool(has_grant),
+    }
     url = "http://127.0.0.1:8000/predict"
     response = requests.get(url, params=params).json
     st.write(params)
