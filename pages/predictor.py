@@ -13,7 +13,7 @@ Please complete the form to see the startup success prediction.
 with st.form("User input form", clear_on_submit=True, border=True):
     founded_date = st.date_input('The company founded year',
                                     datetime.date(2019, 7, 6))
-    month_founded = ((pd.to_datetime('today') - pd.to_datetime(founded_date)).dt.days / 30.44).astype(int)
+    month_founded = ((pd.to_datetime('today') - pd.to_datetime(founded_date)).days / 30.44).astype(int)
 
     location = st.selectbox("Select region", ['Baden-Wurttemberg',
                                                 'Bayern',
