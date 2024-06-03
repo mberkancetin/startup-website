@@ -14,7 +14,6 @@ with st.form("User input form", clear_on_submit=True, border=True):
     founded_date = st.date_input('The company founded year',
                                     datetime.date(2019, 7, 6))
     month_founded = ((pd.to_datetime('today') - pd.to_datetime(founded_date)).days / 30.44).astype(int)
-
     location = st.selectbox("Select region", ['Baden-Wurttemberg',
                                                 'Bayern',
                                                 'Berlin',
@@ -258,9 +257,7 @@ with st.form("User input form", clear_on_submit=True, border=True):
                             'Murchin',
                             'Stralsund'],
                 'Bremen': ['Bremen']}
-
     location_city = st.selectbox("Select location", city_dict[location])
-
     german_cities = {
         'Pullach': {'lat': 48.0675, 'lon': 11.5231},
         'Rosbach Vor Der Höhe': {'lat': 50.2833, 'lon': 8.6833},
@@ -497,30 +494,23 @@ with st.form("User input form", clear_on_submit=True, border=True):
         'Gars': {'lat': 48.1532, 'lon': 12.5309}, # Approximate coordinates
         'Tutzing': {'lat': 47.9086, 'lon': 11.2798},
     }
-
     lat_city = float(german_cities[location_city]["lat"])
-
     lon_city = float(german_cities[location_city]["lon"])
-
     company_size = st.selectbox('Select company size',
                             ['10001+', '1001-5000',
                                 '101-250', '11-50',
                                 '251-500', '5001-10000',
                             '501-1000', '51-100'])
-
     no_founders = st.number_input("Please indicate the number of founders",
                                   min_value=1.0)
-
     funding_status = st.selectbox('Select the most recent investment stage',
                               ["Pre-Seed", "Seed", "Series A",
                                "Series B", "Series C", "Further Stages"])
-
     revenue_range = st.selectbox('Select revenue range',
                             ['Less than $1M', '$1M to $10M',
                              '$10M to $50M', '$50M to $100M',
                              '$100M to $500M', '$500M to $1B',
                              '$1B to $10B', '$10B+'])
-
     industry = st.selectbox('Select industry', ['Sustainability',
                             'Navigation and Mapping',
                             'Advertising',
@@ -570,19 +560,12 @@ with st.form("User input form", clear_on_submit=True, border=True):
                             'Platforms',
                             'Music and Audio',
                             'Social Impact'])
-
     total_funding = st.number_input('Total Funding Amount (in USD)', min_value=0)
-
     st.markdown('''
                 Please indicate the other sources of financing.
                 ''')
-
     has_debt_financing = st.checkbox('Has the company received Debt Financing?')
-
     has_grant = st.checkbox('Has the company received Grant?')
-
-
-
     params = {
         "months_since_founded": month_founded,
         "lat": lat_city,
@@ -596,13 +579,9 @@ with st.form("User input form", clear_on_submit=True, border=True):
         "has_debt_financing": has_debt_financing,
         "has_grant": has_grant,
     }
-
     app_uri = "http://127.0.0.1:8000/predict"
-
     response = requests.get(app_uri, params=params).json
-
     submission_button = st.form_submit_button(label="Submit")
-
     if submission_button:
         st.write(params)
         st.write(response)
