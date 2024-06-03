@@ -579,10 +579,10 @@ params = {
     "has_debt_financing": has_debt_financing,
     "has_grant": has_grant,
 }
-url = "http://127.0.0.1:8000/predict"
-response = requests.get(url, params=params).json
 submission_button = st.button(label="Submit")
 if submission_button:
+    url = "http://127.0.0.1:8000/predict"
+    response = requests.get(url, params=params).json
     st.write(params)
     st.write(float(response["Success Probability"]))
 else:
