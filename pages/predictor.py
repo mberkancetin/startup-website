@@ -502,24 +502,24 @@ with st.form("User input form", clear_on_submit=True, border=True):
 
     lon_city = float(german_cities[location_city]["lon"])
 
-    company_size = st.radio('Select company size',
-                            ('10001+', '1001-5000',
+    company_size = st.selectbox('Select company size',
+                            ['10001+', '1001-5000',
                                 '101-250', '11-50',
                                 '251-500', '5001-10000',
-                            '501-1000', '51-100'))
+                            '501-1000', '51-100'])
 
     no_founders = st.number_input("Please indicate the number of founders",
                                   min_value=1.0)
 
-    funding_status = st.radio('Select the most recent investment stage',
-                              ("Pre-Seed", "Seed", "Series A",
-                               "Series B", "Series C", "Further Stages"))
+    funding_status = st.selectbox('Select the most recent investment stage',
+                              ["Pre-Seed", "Seed", "Series A",
+                               "Series B", "Series C", "Further Stages"])
 
-    revenue_range = st.radio('Select revenue range',
-                            ('Less than $1M', '$1M to $10M',
+    revenue_range = st.selectbox('Select revenue range',
+                            ['Less than $1M', '$1M to $10M',
                              '$10M to $50M', '$50M to $100M',
                              '$100M to $500M', '$500M to $1B',
-                             '$1B to $10B', '$10B+'))
+                             '$1B to $10B', '$10B+'])
 
     industry = st.selectbox('Select industry', ['Sustainability',
                             'Navigation and Mapping',
