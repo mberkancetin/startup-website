@@ -554,6 +554,6 @@ if submission_button:
     st.write(params)
     url = "http://127.0.0.1:8080/predict"
     response = requests.get(url=url, params=params)
-    st.write(response.json())
+    st.write(response.json()["Success Probability"])
 else:
     st.write('Please submit to see the prediction')
