@@ -552,7 +552,7 @@ if submission_button:
     }
 
     st.write(params)
-    url = "http://127.0.0.1:8080/predict"
+    url = "https://startorbv2-jagyvvkiea-ew.a.run.app/predict"
     response = requests.get(url=url, params=params)
     st.write(response.json()["Success Probability"])
 else:
