@@ -550,23 +550,9 @@ if submission_button:
         "has_debt_financing": bool(has_debt_financing),
         "has_grant": bool(has_grant),
     }
-    """
-        params = (
-        int(month_founded),
-        float(lat_city),
-        float(lon_city),
-        str(company_size),
-        float(no_founders),
-        str(industry),
-        str(funding_status),
-        str(revenue_range),
-        float(total_funding),
-        bool(has_debt_financing),
-        bool(has_grant),
-    )
-    """
+
     st.write(params)
-    url = "http://127.0.0.1:5000/predict"
+    url = "http://127.0.0.1:8080/predict"
     response = requests.get(url=url, params=params)
     st.write(response.json)
 else:
