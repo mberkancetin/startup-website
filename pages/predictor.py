@@ -566,7 +566,7 @@ if submission_button:
     )
     """
     st.write(params)
-    url = "http://0.0.0.0:8000/predict"
+    url = "http://127.0.0.1:5000/predict"
     response = requests.get(url=url, params=params)
     st.write(response.json)
 else:
