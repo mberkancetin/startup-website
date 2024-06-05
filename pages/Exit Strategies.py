@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+import datetime
 
 df_final = pd.read_csv("/root/code/mberkancetin/startup-website/raw_data/X_y_data3.csv")
 
@@ -10,7 +11,15 @@ with open("/root/code/mberkancetin/startup-website/style.css") as f:
 
 st.title("Exit Strategies 🚀")
 
-#Check if entry values are existent in session state
+# Sample benchmark data
+benchmark_data = {
+    'Industry': ['Tech', 'Healthcare', 'Finance', 'Retail', 'Energy and Natural Resources'],
+    'Average Exit Time (Years)': [8, 10, 7, 12, 10],
+    'Success Rate (%)': [60, 30, 25, 40, 75]
+}
+benchmark_df = pd.DataFrame(benchmark_data)
+
+# Check if entry values are existent in session state
 if 'founded_date' in st.session_state and 'next_stage_funding' in st.session_state and 'industry' in st.session_state:
     location = st.session_state.location
     location_city = st.session_state.location_city
@@ -28,7 +37,7 @@ if 'founded_date' in st.session_state and 'next_stage_funding' in st.session_sta
     input_data = {
         'Industry': [industry],
         'Average Exit Time (Years)': [(datetime.date.today() - founded_date).days / 365],  # Beispiel: Berechnung der Firmenalter in Jahren
-        'Success Rate (%)': [next_stage_funding / 10000],  # Beispiel: Next Stage Funding als Proxy für Success Rate
+        'Success Rate (%)': [60],  # Beispiel: Next Stage Funding als Proxy für Success Rate
         'Recommended Strategy': ['IPO']  # Beispiel: Feste Strategie
     }
     input_df = pd.DataFrame(input_data)

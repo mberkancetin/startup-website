@@ -29,11 +29,11 @@ if 'founded_date' in st.session_state and 'next_stage_funding' in st.session_sta
 
     # Beispielhafte Benchmark-Daten
     benchmark_data = {
-        'Year': [2018, 2019, 2020, 2021, 2022],
-        'Funding Amount': [1000000, 1500000, 2000000, 2500000, 3000000],
-        'Industry': ['Tech', 'Health', 'Finance', 'Education', 'Tech'],
-        'Region': ['North America', 'Europe', 'Asia', 'North America', 'Europe'],
-        'Investment Stage': ['Seed', 'Series A', 'Series B', 'Series C', 'Seed']
+        'Year': [2018, 2019, 2020, 2021, 2022, 2023],
+        'Funding Amount': [1000000, 1500000, 2000000, 2500000, 3000000, 1750000],
+        'Industry': ['Tech', 'Health', 'Finance', 'Education', 'Tech', 'Energy and Natural Resources'],
+        'Region': ['North America', 'Europe', 'Asia', 'North America', 'Europe', 'Europe'],
+        'Investment Stage': ['Seed', 'Series A', 'Series B', 'Series C', 'Seed', 'Pre-Seed']
     }
     benchmark_df = pd.DataFrame(benchmark_data)
 
