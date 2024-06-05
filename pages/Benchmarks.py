@@ -94,7 +94,7 @@ heatmap_data = melted_df.pivot(index='industry_groups', columns='Funding Stage',
 ax = sns.heatmap(heatmap_data, annot=True, cmap='YlGnBu', cbar_kws={'label': 'Mean Growth Ratio'}, linewidths=.5)
 
 # Add a marker for "Your Company"
-your_company_industry = 'Health and Biotechnology'
+your_company_industry = 'Energy and Natural Resources'
 your_company_stage = 'b_to_a_ratio'
 plt.scatter(funding_ratios.index(your_company_stage) + 0.5,
             heatmap_data.index.get_loc(your_company_industry) + 0.2,
