@@ -18,117 +18,57 @@ st.write("Diagrams here")
 
 
 #Check if entry values are existent in session state
-if 'company_age' in st.session_state and 'funding_stage' in st.session_state and 'industry' in st.session_state and 'funding_amount' in st.session_state and 'number_of_articles' in st.session_state:
-    company_age = st.session_state.company_age
-    company_region = st.session_state.company_region
-    last_funding = st.session_state.last_funding
+if 'revenue_range' in st.session_state and 'industry' in st.session_state and 'total_funding' in st.session_state and 'company_size' in st.session_state:
+    location = st.session_state.location
+    location_city = st.session_state.location_city
+    company_size = st.session_state.company_size
+    no_founders = st.session_state.no_founders
+    funding_status = st.session_state.funding_status
+    revenue_range = st.session_state.revenue_range
     founded_date = st.session_state.founded_date
-    funding_stage = st.session_state.funding_stage
+    next_stage_funding = st.session_state.next_stage_funding
+    has_debt_financing = st.session_state.has_debt_financing
+    has_grant = st.session_state.has_grant
     industry = st.session_state.industry
-    funding_amount = st.session_state.funding_amount
-    number_of_articles = st.session_state.number_of_articles
 
 
-    # Example data
-    benchmark_data = {
-        'Company Age': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-        'Funding Amount': [50000, 100000, 150000, 200000, 250000, 300000, 350000, 400000, 450000, 500000],
-        'Last Funding': [10000, 20000, 30000, 40000, 50000, 60000, 70000, 80000, 90000, 100000],
-        'Number of Articles': [5, 10, 15, 20, 25, 30, 35, 40, 45, 50]
-    }
-    benchmark_df = pd.DataFrame(benchmark_data)
-
-
-    # Input data as df
     input_data = {
-        'Metric': ['Company Age', 'Funding Amount', 'Last Funding', 'Number of Articles'],
-        'Value': [company_age, funding_amount, last_funding, number_of_articles]
+        'Metric': ['Revenue Range', 'Industry', 'Total Funding', 'Company Size'],
+        'Value': [revenue_range, industry, total_funding, company_size]
     }
     input_df = pd.DataFrame(input_data)
 
     st.write("Your comparison with the industry benchmark")
 
-    #Bar chart
-    fig = px.bar(benchmark_df, x=benchmark_df.index, y=['Company Age', 'Funding Amount', 'Last Funding', 'Number of Articles'],
+    # Balkendiagramm
+    fig = px.bar(benchmark_df, x=benchmark_df.index, y=['Revenue Range', 'Industry', 'Total Funding', 'Company Size'],
                  title='Benchmark Data', labels={'value': 'Value', 'index': 'Benchmark Index'})
     fig.add_scatter(x=input_df['Metric'], y=input_df['Value'], mode='markers+text', text=input_df['Value'], textposition='top center', name='Input Data')
     st.plotly_chart(fig, use_container_width=True)
 
-    # Line Chart
-    fig2 = px.line(benchmark_df, x=benchmark_df.index, y=['Company Age', 'Funding Amount', 'Last Funding', 'Number of Articles'],
+    # Liniendiagramm
+    fig2 = px.line(benchmark_df, x=benchmark_df.index, y=['Revenue Range', 'Industry', 'Total Funding', 'Company Size'],
                    title='Benchmark Data Over Time', labels={'value': 'Value', 'index': 'Benchmark Index'})
     fig2.add_scatter(x=input_df['Metric'], y=input_df['Value'], mode='markers+text', text=input_df['Value'], textposition='top center', name='Input Data')
     st.plotly_chart(fig2, use_container_width=True)
 
 
 #Save variables in session state
-    st.session_state.company_age = company_age
-    st.session_state.company_region = company_region
-    st.session_state.founded_date = founded_date
-    st.session_state.funding_stage = funding_stage
-    st.session_state.last_funding = last_funding
-    st.session_state.industry = industry
-    st.session_state.funding_amount = funding_amount
-    st.session_state.number_of_articles = number_of_articles
+    location = st.session_state.location
+    location_city = st.session_state.location_city
+    company_size = st.session_state.company_size
+    no_founders = st.session_state.no_founders
+    funding_status = st.session_state.funding_status
+    revenue_range = st.session_state.revenue_range
+    founded_date = st.session_state.founded_date
+    total_funding = st.session_state.total_funding
+    has_debt_financing = st.session_state.has_debt_financing
+    has_grant = st.session_state.has_grant
+    industry = st.session_state.industry
 else:
     st.warning("Please enter the required information on the input")
 
 
-################################## BUZZ ########################################
-
-
-
-# Set the style
-plt.style.use('fivethirtyeight')
-
-# Convert 'articles' column to numeric, forcing errors to NaN, then drop NaNs and 0 values
-df_final['articles'] = pd.to_numeric(df_final['articles'], errors='coerce')
-df_articles_filtered = df_final.dropna(subset=['articles'])
-df_articles_filtered = df_articles_filtered[df_articles_filtered['articles'] > 0]
-
-# Specify the funding round to analyze
-funding_round = 'Series B'
-
-# Filter the dataframe for the specified funding round
-df_round_filtered = df_articles_filtered[df_articles_filtered['last_funding_type'] == funding_round]
-
-# Calculate statistics for the funding round
-mean_articles = df_round_filtered['articles'].mean()
-std_articles = df_round_filtered['articles'].std()
-stats = {
-    'Min': df_round_filtered['articles'].min(),
-    '25th percentile': df_round_filtered['articles'].quantile(0.25),
-    'Median': df_round_filtered['articles'].median(),
-    '75th percentile': df_round_filtered['articles'].quantile(0.75),
-    '1 SD Above Mean': mean_articles + 1 * std_articles,
-    '2 SD Above Mean': mean_articles + 2 * std_articles
-}
-
-# Define a hypothetical company
-hypothetical_company_articles = 30
-
-# Combine stats and hypothetical company
-all_values = list(stats.values()) + [hypothetical_company_articles]
-all_labels = list(stats.keys()) + ['Your Company']
-sorted_indices = np.argsort(all_values)
-
-sorted_values = np.array(all_values)[sorted_indices]
-sorted_labels = np.array(all_labels)[sorted_indices]
-
-# Create the lollipop chart
-plt.figure(figsize=(12, 6))
-
-# Plot the lollipop chart
-for i, value in enumerate(sorted_values):
-    color = 'red' if sorted_labels[i] == 'Your Company' else 'blue'
-    plt.hlines(y=sorted_labels[i], xmin=0, xmax=value, color=color, alpha=0.7)
-    plt.plot(value, sorted_labels[i], 'o', color=color)
-
-# Set the labels and title
-plt.xlabel('Number of Articles')
-plt.title('Buzz Surrounding Companies in Series B')
-
-st.pyplot(plt)
 
 ############################## Mean Growth Ratio by Industry Group and Funding Stage############
 

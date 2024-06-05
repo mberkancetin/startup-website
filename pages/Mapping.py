@@ -14,53 +14,95 @@ with open("/root/code/mberkancetin/startup-website/style.css") as f:
 st.title("Map 🗺️")
 
 # Check if entry values are existent in session state
-if 'company_age' in st.session_state and 'funding_stage' in st.session_state and 'industry' in st.session_state and 'funding_amount' in st.session_state and 'number_of_articles' in st.session_state:
-    company_age = st.session_state.company_age
-    company_region = st.session_state.company_region
-    last_funding = st.session_state.last_funding
+if 'founded_date' in st.session_state and 'next_stage_funding' in st.session_state and 'industry' in st.session_state and 'location' in st.session_state and 'funding_status' in st.session_state:
+    location = st.session_state.location
+    location_city = st.session_state.location_city
+    company_size = st.session_state.company_size
+    no_founders = st.session_state.no_founders
+    funding_status = st.session_state.funding_status
+    revenue_range = st.session_state.revenue_range
     founded_date = st.session_state.founded_date
-    funding_stage = st.session_state.funding_stage
+    next_stage_funding = st.session_state.next_stage_funding
+    has_debt_financing = st.session_state.has_debt_financing
+    has_grant = st.session_state.has_grant
     industry = st.session_state.industry
-    funding_amount = st.session_state.funding_amount
-    number_of_articles = st.session_state.number_of_articles
+    lon = st.session_state.lon
+    lat = st.session_state.lat
 
     # Beispielhafte Benchmark-Daten
     benchmark_data = {
-        'lat': [37.7749, 40.7128, 34.0522, 51.5074, 48.8566],
-        'lon': [-122.4194, -74.0060, -118.2437, -0.1278, 2.3522],
-        'City': ['San Francisco', 'New York', 'Los Angeles', 'London', 'Paris'],
-        'Investment Amount': [5000000, 7000000, 3000000, 4000000, 6000000]
+        'Year': [2018, 2019, 2020, 2021, 2022],
+        'Funding Amount': [1000000, 1500000, 2000000, 2500000, 3000000],
+        'Industry': ['Tech', 'Health', 'Finance', 'Education', 'Tech'],
+        'Region': ['North America', 'Europe', 'Asia', 'North America', 'Europe'],
+        'Investment Stage': ['Seed', 'Series A', 'Series B', 'Series C', 'Seed']
     }
     benchmark_df = pd.DataFrame(benchmark_data)
 
     # Eingabewerte als DataFrame
     input_data = {
-        'lat': [37.7749],  # Example latitude for the input data
-        'lon': [-122.4194],  # Example longitude for the input data
-        'City': ['San Francisco'],  # Example city for the input data
-        'Investment Amount': [funding_amount]
+        'Year': [founded_date.year],
+        'Funding Amount': [next_stage_funding],
+        'Industry': [industry],
+        'Region': [location],
+        'Investment Stage': [funding_status]
     }
     input_df = pd.DataFrame(input_data)
 
     st.write("Your comparison with the industry benchmark")
 
+    # Zeitliche Entwicklung der Finanzierungsrunden
+    fig1 = px.line(benchmark_df, x='Year', y='Funding Amount', title='Funding Amount Over Years')
+    fig1.add_scatter(x=input_df['Year'], y=input_df['Funding Amount'], mode='markers+text', text=input_df['Funding Amount'], textposition='top center', name='Input Data')
+    st.plotly_chart(fig1, use_container_width=True)
+
+    # Vergleich der Finanzierungsbeträge nach Branchen und Regionen
+    fig2 = px.bar(benchmark_df, x='Industry', y='Funding Amount', color='Region', title='Funding Amount by Industry and Region')
+    fig2.add_scatter(x=input_df['Industry'], y=input_df['Funding Amount'], mode='markers+text', text=input_df['Funding Amount'], textposition='top center', name='Input Data')
+    st.plotly_chart(fig2, use_container_width=True)
+
+    # Analyse der häufigsten Investitionsphasen
+    fig3 = px.histogram(benchmark_df, x='Investment Stage', title='Investment Stages Distribution')
+    fig3.add_scatter(x=input_df['Investment Stage'], y=[1], mode='markers+text', text=input_df['Investment Stage'], textposition='top center', name='Input Data')
+    st.plotly_chart(fig3, use_container_width=True)
+
+    # Beispielhafte Benchmark-Daten für die Karte
+    benchmark_data_map = {
+        'lat': [37.7749, 40.7128, 34.0522, 51.5074, 48.8566],
+        'lon': [-122.4194, -74.0060, -118.2437, -0.1278, 2.3522],
+        'City': ['San Francisco', 'New York', 'Los Angeles', 'London', 'Paris'],
+        'Investment Amount': [5000000, 7000000, 3000000, 4000000, 6000000]
+    }
+    benchmark_df_map = pd.DataFrame(benchmark_data_map)
+
+    # Eingabewerte als DataFrame für die Karte
+    input_data_map = {
+        'lat': [float(german_cities[location_city]["lat"])],
+        'lon': [float(german_cities[location_city]["lon"])],
+        'City': [location_city],
+        'Investment Amount': [next_stage_funding]
+    }
+    input_df_map = pd.DataFrame(input_data_map)
+
+    st.write("Your comparison with the industry benchmark")
+
     # Karte mit den Standorten der Startups
-    st.map(benchmark_df)
+    st.map(benchmark_df_map)
 
     # Analyse der geografischen Verteilung der Investitionen
     st.write("Geographical Distribution of Funding")
-    st.write(benchmark_df)
+    st.write(benchmark_df_map)
 
     # Identifikation von aufstrebenden Startup-Hubs
     st.write("Rising Startup-Hubs")
-    st.write(benchmark_df[benchmark_df['Investment Amount'] > 4000000])
+    st.write(benchmark_df_map[benchmark_df_map['Investment Amount'] > 4000000])
 
     # Vergleich der Eingabewerte mit den Benchmark-Daten
     st.write("Comparison with Your Data")
-    st.write(input_df)
+    st.write(input_df_map)
 
     # Visualisierung der Eingabewerte auf der Karte
-    st.map(input_df)
+    st.map(input_df_map)
 
 else:
     st.warning("Please enter the required information on the input page")
