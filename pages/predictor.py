@@ -3,33 +3,98 @@ import requests
 import datetime
 import pandas as pd
 
+# CSS
+# with open("/root/code/mberkancetin/startup-website/style.css") as f:
+#     st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+
+# Button to navigate back to Home
 if st.button("Home"):
     st.switch_page("app.py")
 
-st.markdown('''
-Please complete the form to see the startup success prediction.
-''')
+st.markdown(
+    """
+    <div style="text-align: center; font-size: 24px;">
+        Are you ready to see your overall success prediction?
+    </div>
+    <br><br>
+    <div style="text-align: center; font-size: 18px; margin-bottom: 30px;">
+       The Orb will compare your company based on various parameters and give a score between 0 and 1, with 1 representing success
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 
-# with st.form("User input form", clear_on_submit=True, border=True):
-founded_date = st.date_input('The company founded year',
-                                datetime.date(2019, 7, 6))
-month_founded = int((pd.to_datetime('today') - pd.to_datetime(founded_date)).days / 30.44)
-location = st.selectbox("Select region", ['Baden-Wurttemberg',
-                                            'Bayern',
-                                            'Berlin',
-                                            'Brandenburg',
-                                            'Bremen',
-                                            'Hamburg',
-                                            'Hessen',
-                                            'Mecklenburg-Vorpommern',
-                                            'Niedersachsen',
-                                            'Nordrhein-Westfalen',
-                                            'Rheinland-Pfalz',
-                                            'Saarland',
-                                            'Sachsen',
-                                            'Sachsen-Anhalt',
-                                            'Schleswig-Holstein',
-                                            'Thuringen'])
+# Initialize session state variables if not already set
+if 'founded_date' not in st.session_state:
+    st.session_state.founded_date = datetime.date(2019, 7, 6)
+if 'month_founded' not in st.session_state:
+    st.session_state.month_founded = 32
+if 'location' not in st.session_state:
+    st.session_state.location = 'Baden-Wurttemberg'
+if 'location_city' not in st.session_state:
+    st.session_state.location_city = 'Stuttgart'
+if 'company_size' not in st.session_state:
+    st.session_state.company_size = '11-50'
+if 'no_founders' not in st.session_state:
+    st.session_state.no_founders = 1.0
+if 'funding_status' not in st.session_state:
+    st.session_state.funding_status = 'Pre-Seed'
+if 'revenue_range' not in st.session_state:
+    st.session_state.revenue_range = 'Less than $1M'
+if 'industry' not in st.session_state:
+    st.session_state.industry = 'Technology and Software'
+if 'next_stage_funding' not in st.session_state:
+    st.session_state.next_stage_funding = 10000
+if 'has_debt_financing' not in st.session_state:
+    st.session_state.has_debt_financing = False
+if 'has_grant' not in st.session_state:
+    st.session_state.has_grant = False
+if 'lat_city' not in st.session_state:
+    st.session_state.lat_city = 52.0012
+if 'lon_city' not in st.session_state:
+    st.session_state.lon_city = 10.0012
+
+# Define callback functions to update session state
+def update_founded_date():
+    st.session_state.founded_date = st.session_state.founded_date_input
+def update_month_founded():
+    st.session_state.month_founded = st.session_state.month_founded
+def update_location():
+    st.session_state.location = st.session_state.location_input
+def update_location_city():
+    st.session_state.location_city = st.session_state.location_city_input
+def update_company_size():
+    st.session_state.company_size = st.session_state.company_size_input
+def update_no_founders():
+    st.session_state.no_founders = st.session_state.no_founders_input
+def update_funding_status():
+    st.session_state.funding_status = st.session_state.funding_status_input
+def update_revenue_range():
+    st.session_state.revenue_range = st.session_state.revenue_range_input
+def update_industry():
+    st.session_state.industry = st.session_state.industry_input
+def update_total_funding():
+    st.session_state.total_funding = st.session_state.total_funding_input
+def update_has_debt_financing():
+    st.session_state.has_debt_financing = st.session_state.has_debt_financing_input
+def update_has_grant():
+    st.session_state.has_grant = st.session_state.has_grant_input
+def update_lat_city():
+    st.session_state.lat_city = st.session_state.lat_city
+def update_lon_city():
+    st.session_state.lon_city = st.session_state.lon_city
+
+# User input form
+founded_date = st.date_input('The company founded year', value=st.session_state.founded_date, key="founded_date_input", on_change=update_founded_date)
+location = st.selectbox("Select region", [
+    'Baden-Wurttemberg', 'Bayern', 'Berlin', 'Brandenburg', 'Bremen', 'Hamburg', 'Hessen',
+    'Mecklenburg-Vorpommern', 'Niedersachsen', 'Nordrhein-Westfalen', 'Rheinland-Pfalz',
+    'Saarland', 'Sachsen', 'Sachsen-Anhalt', 'Schleswig-Holstein', 'Thuringen'
+], index=['Baden-Wurttemberg', 'Bayern', 'Berlin', 'Brandenburg', 'Bremen', 'Hamburg', 'Hessen',
+    'Mecklenburg-Vorpommern', 'Niedersachsen', 'Nordrhein-Westfalen', 'Rheinland-Pfalz',
+    'Saarland', 'Sachsen', 'Sachsen-Anhalt', 'Schleswig-Holstein',
+    'Thuringen'].index(st.session_state.location), key="location_input", on_change=update_location)
+
 city_dict = {'Hessen': ['Sulzbach',
                         'Marburg',
                         'Dreieich',
@@ -257,7 +322,9 @@ city_dict = {'Hessen': ['Sulzbach',
                         'Murchin',
                         'Stralsund'],
             'Bremen': ['Bremen']}
-location_city = st.selectbox("Select location", city_dict[location])
+# location_city = st.selectbox("Select location", city_dict[location])
+location_city = st.selectbox("Select location", city_dict[location], key="location_city_input", on_change=update_location_city)
+
 german_cities = {
     'Pullach': {'lat': 48.0675, 'lon': 11.5231},
     'Rosbach Vor Der Höhe': {'lat': 50.2833, 'lon': 8.6833},
@@ -494,66 +561,104 @@ german_cities = {
     'Gars': {'lat': 48.1532, 'lon': 12.5309}, # Approximate coordinates
     'Tutzing': {'lat': 47.9086, 'lon': 11.2798},
 }
-lat_city = float(german_cities[location_city]["lat"])
-lon_city = float(german_cities[location_city]["lon"])
-company_size = st.selectbox('Select company size',
-                        ['10001+', '1001-5000',
-                            '101-250', '11-50',
-                            '251-500', '5001-10000',
-                        '501-1000', '51-100'])
-no_founders = st.number_input("Number of founders",
-                                min_value=1, step=1)
-funding_status = st.selectbox('Select the most recent investment stage',
-                            ["Pre-Seed", "Seed", "Series A",
-                            "Series B", "Series C", "Further Stages"])
-revenue_range = st.selectbox('Select revenue range',
-                        ['Less than $1M', '$1M to $10M',
-                            '$10M to $50M', '$50M to $100M',
-                            '$100M to $500M', '$500M to $1B',
-                            '$1B to $10B', '$10B+'])
-industry = st.selectbox('Select industry', ['Energy and Natural Resources',
-                            'Technology and Software',
-                            'Business Services',
-                            'Community and Lifestyle',
-                            'Finance and Payments',
-                            'Other',
-                            'Hardware and Electronics',
-                            'Consumer Products',
-                            'Manufacturing and Industry',
-                            'Media and Entertainment',
-                            'Telecommunications and Internet Services',
-                            'Healthcare and Biotechnology',
-                            'Travel and Tourism',
-                            'Retail and E-commerce',
-                            'Transportation and Logistics',
-                            'Education and Training',
-                            'Government and Public Services',
-                            'Science and Engineering',])
-total_funding = st.number_input('Total Funding Amount (in USD)', min_value=0)
+st.session_state.lat_city = float(german_cities[st.session_state.location_city]["lat"])
+st.session_state.lon_city = float(german_cities[st.session_state.location_city]["lon"])
+
+company_size = st.selectbox('Select company size', ['11-50', '51-100', '101-250',
+                                                    '251-500', '501-1000', '1001-5000',
+                                                    '5001-10000', '10001+'], key="company_size_input", on_change=update_company_size)
+st.session_state.no_founders = st.number_input("Number of founders", min_value=1, step=1, key="no_founders_input", on_change=update_no_founders)
+st.session_state.funding_status = st.selectbox('Select the most recent investment stage', ["Pre-Seed", "Seed",
+                                                                          "Series A", "Series B",
+                                                                          "Series C", "Further Stages"], key="funding_status_input", on_change=update_funding_status)
+st.session_state.revenue_range = st.selectbox('Select revenue range', ['Less than $1M', '$1M to $10M', '$10M to $50M', '$50M to $100M',
+                                                      '$100M to $500M', '$500M to $1B', '$1B to $10B',
+                                                      '$10B+'], key="revenue_range_input", on_change=update_revenue_range)
+st.session_state.industry = st.selectbox('Select industry', ['Energy and Natural Resources', 'Technology and Software',
+                                            'Business Services', 'Community and Lifestyle',
+                                            'Finance and Payments', 'Other', 'Hardware and Electronics',
+                                            'Consumer Products', 'Manufacturing and Industry', 'Media and Entertainment',
+                                            'Telecommunications and Internet Services', 'Healthcare and Biotechnology',
+                                            'Travel and Tourism', 'Retail and E-commerce', 'Transportation and Logistics',
+                                            'Education and Training', 'Government and Public Services',
+                                            'Science and Engineering'], key="industry_input", on_change=update_industry)
+# total_funding = st.number_input('Total Funding Amount (in USD)', min_value=0, key="total_funding_input", on_change=update_total_funding)
 st.markdown('''
             Please indicate the other sources of financing.
             ''')
-has_debt_financing = st.checkbox('Debt Financing')
-has_grant = st.checkbox('Grant')
+st.session_state.has_debt_financing = st.checkbox('Debt Financing', key="has_debt_financing_input", on_change=update_has_debt_financing)
+st.session_state.has_grant = st.checkbox('Grant', key="has_grant_input", on_change=update_has_grant)
 submission_button = st.button(label="Submit")
 if submission_button:
-    params = {
-        "months_since_founded": int(month_founded),
-        "lat": float(lat_city),
-        "lon": float(lon_city),
-        "company_size": str(company_size),
-        "no_founders": float(no_founders),
-        "industry_groups": str(industry),
-        "funding_status": str(funding_status),
-        "revenue_range": str(revenue_range),
-        "total_funding": float(total_funding),
-        "has_debt_financing": bool(has_debt_financing),
-        "has_grant": bool(has_grant),
-    }
+    # Clear the page
+    st.empty()
 
-    st.write(params)
-    url = "https://startorbv2-jagyvvkiea-ew.a.run.app/predict"
+    # Display the animation
+    st.image('images/orb.gif', use_column_width=True)
+    month_founded = int((pd.to_datetime('today') - pd.to_datetime(st.session_state.founded_date)).days / 30.44)
+
+    params = {
+        "months_since_founded": st.session_state.month_founded,
+        "lat": float(st.session_state.lat_city),
+        "lon": float(st.session_state.lon_city),
+        "company_size": str(st.session_state.company_size),
+        "no_founders": float(st.session_state.no_founders),
+        "industry_groups": str(st.session_state.industry),
+        "funding_status": str(st.session_state.funding_status),
+        "revenue_range": str(st.session_state.revenue_range),
+        "total_funding": float(1000000.00),
+        "has_debt_financing": bool(st.session_state.has_debt_financing),
+        "has_grant": bool(st.session_state.has_grant),
+    }
+    # st.write(params)
+
+    # predict the success probability
+    url = "https://newmodel-jagyvvkiea-ew.a.run.app/predict"
     response = requests.get(url=url, params=params)
-    st.write(response.json()["Success Probability"])
+    success_prediction = response.json()["Success Probability"]
+    success_prediction = round(success_prediction * 100, 2)
+    # Display the success prediction
+    st.markdown(
+        f"""
+        <div style="text-align: center; font-size: 24px;">
+            Your Success Prediction Score: {success_prediction}%
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+    # predict the next stage funding
+    url = "https://newmodel-jagyvvkiea-ew.a.run.app/regressor"
+    response = requests.get(url=url, params=params)
+    st.session_state.next_stage_funding = round(response.json()["Extimated Funding for the Next Round"], -4)
+
+    # Display the success prediction
+    st.markdown(
+        f"""
+        <div style="text-align: center; font-size: 24px;">
+            Estimated Funding for the Next Investment Round: {st.session_state.next_stage_funding}
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+
+    col2, col3, col4, col5 = st.columns(4)
+
+    with col2:
+        if st.button("Industry Benchmarks"):
+            st.switch_page("pages/Benchmarks.py")
+
+    with col3:
+        if st.button("Funding Trends"):
+            st.switch_page("pages/Funding_Trends.py")
+
+    with col4:
+        if st.button("Map"):
+            st.switch_page("pages/Mapping.py")
+
+    with col5:
+        if st.button("Exit Strategies"):
+            st.switch_page("pages/Exit Strategies.py")
 else:
     st.write('Please submit to see the prediction')

@@ -1,4 +1,4 @@
-import streamlit as st
+"""import streamlit as st
 import requests
 import datetime
 import time
@@ -12,7 +12,7 @@ with open("/root/code/mberkancetin/startup-website/style.css") as f:
 
 # Center and enlarge the text
 st.markdown(
-    """
+    \"""
     <div style="text-align: center; font-size: 24px;">
         Are you ready to see your overall success prediction?
     </div>
@@ -20,7 +20,7 @@ st.markdown(
     <div style="text-align: center; font-size: 18px; margin-bottom: 30px;">
        The Orb will compare your company based on various parameters and give a score between 0 and 1, with 1 representing success
     </div>
-    """,
+    \""",
     unsafe_allow_html=True
 )
 
@@ -49,13 +49,13 @@ if 'company_age' in st.session_state and 'funding_stage' in st.session_state and
 
         # Display the success prediction
         st.markdown(
-            f"""
-            <div style="text-align: center; font-size: 24px;">
-                Your Success Prediction Score: {success_prediction}
-            </div>
-            """,
+            # f\"""
+            # <div style="text-align: center; font-size: 24px;">
+            #     Your Success Prediction Score: {success_prediction}
+            # </div>
+            # \""",
             unsafe_allow_html=True
         )
 
 else:
-    st.warning("Please enter the required information on the input page")
+    st.warning("Please enter the required information on the input page")"""
