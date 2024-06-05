@@ -3,6 +3,8 @@ import requests
 import datetime
 import pandas as pd
 
+#st.logo("images/startorb.jpg")
+
 df_final = pd.read_csv("/root/code/mberkancetin/startup-website/raw_data/X_y_data3.csv")
 
 
@@ -15,16 +17,22 @@ st.markdown('''
             Harness the Power of Data to Illuminate Your Startup Journey
 ''')
 
+# “Predicting Success with StartOrb”
+
 st.image('images/orb.gif')
 
+# col1, col2 = st.columns(2)
 col1, col2, col3 = st.columns(3)
 
 with col1:
     if st.button("Success Prediction"):
+        # st.switch_page("pages/predictor.py")
         st.switch_page("pages/Success Predictor.py")
 
 with col2:
     if st.button("Industry Benchmarks"):
+   # if st.button("Ecosystem Benchmarks"):
+        #st.switch_page("pages/benchmarks.py")
         st.switch_page("pages/Benchmarks.py")
 
 with col3:
