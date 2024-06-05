@@ -1,0 +1,10 @@
+# .streamlit/config.toml
+
+[theme]
+primaryColor = "#FFFFFF"  # Weiß für interaktive Elemente
+backgroundColor = "#000000"  # Schwarz für den Hauptinhalt
+secondaryBackgroundColor = "#1A1A1A"  # Dunkelgrau für die Seitenleiste und Widgets
+textColor = "#FFFFFF"  # Weiß für den Text
+font = "sans serif"
+
+
