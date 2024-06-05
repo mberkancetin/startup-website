@@ -2,6 +2,8 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 
+df_final = pd.read_csv("/root/code/mberkancetin/startup-website/raw_data/X_y_data3.csv")
+
 # Einbinden des benutzerdefinierten CSS
 with open("/root/code/mberkancetin/startup-website/style.css") as f:
     st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)

@@ -4,6 +4,8 @@ import datetime
 import time
 import random
 
+df_final = pd.read_csv("/root/code/mberkancetin/startup-website/raw_data/X_y_data3.csv")
+
 # Einbinden des benutzerdefinierten CSS
 with open("/root/code/mberkancetin/startup-website/style.css") as f:
     st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
@@ -57,5 +59,3 @@ if 'company_age' in st.session_state and 'funding_stage' in st.session_state and
 
 else:
     st.warning("Please enter the required information on the input page")
-
-

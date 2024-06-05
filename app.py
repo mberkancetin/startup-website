@@ -1,6 +1,10 @@
 import streamlit as st
 import requests
 import datetime
+import pandas as pd
+
+df_final = pd.read_csv("/root/code/mberkancetin/startup-website/raw_data/X_y_data3.csv")
+
 
 # Einbinden des benutzerdefinierten CSS
 with open("/root/code/mberkancetin/startup-website/style.css") as f:
