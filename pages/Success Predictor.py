@@ -3,6 +3,7 @@ import requests
 import datetime
 import time
 import random
+import pandas as pd
 
 df_final = pd.read_csv("/root/code/mberkancetin/startup-website/raw_data/X_y_data3.csv")
 

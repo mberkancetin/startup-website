@@ -13,16 +13,19 @@ with open("/root/code/mberkancetin/startup-website/style.css") as f:
 
 st.title("Funding Trends 💰📈")
 
-# Überprüfen, ob die Eingaben im Session State vorhanden sind
-if 'company_age' in st.session_state and 'funding_stage' in st.session_state and 'industry' in st.session_state and 'funding_amount' in st.session_state and 'number_of_articles' in st.session_state:
-    company_age = st.session_state.company_age
-    company_region = st.session_state.company_region
-    last_funding = st.session_state.last_funding
+# Überprüfen, ob die Eintragswerte im Session State vorhanden sind
+if 'founded_date' in st.session_state and 'next_stage_funding' in st.session_state and 'industry' in st.session_state and 'location' in st.session_state and 'funding_status' in st.session_state:
+    location = st.session_state.location
+    location_city = st.session_state.location_city
+    company_size = st.session_state.company_size
+    no_founders = st.session_state.no_founders
+    funding_status = st.session_state.funding_status
+    revenue_range = st.session_state.revenue_range
     founded_date = st.session_state.founded_date
-    funding_stage = st.session_state.funding_stage
+    next_stage_funding = st.session_state.next_stage_funding
+    has_debt_financing = st.session_state.has_debt_financing
+    has_grant = st.session_state.has_grant
     industry = st.session_state.industry
-    funding_amount = st.session_state.funding_amount
-    number_of_articles = st.session_state.number_of_articles
 
     # Beispielhafte Benchmark-Daten
     benchmark_data = {
@@ -37,10 +40,10 @@ if 'company_age' in st.session_state and 'funding_stage' in st.session_state and
     # Eingabewerte als DataFrame
     input_data = {
         'Year': [founded_date.year],
-        'Funding Amount': [funding_amount],
+        'Funding Amount': [next_stage_funding],
         'Industry': [industry],
-        'Region': [company_region],
-        'Investment Stage': [funding_stage]
+        'Region': [location],
+        'Investment Stage': [funding_status]
     }
     input_df = pd.DataFrame(input_data)
 

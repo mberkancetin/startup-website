@@ -10,31 +10,25 @@ with open("/root/code/mberkancetin/startup-website/style.css") as f:
 
 st.title("Exit Strategies 🚀")
 
-# Überprüfen, ob die Eingaben im Session State vorhanden sind
-if 'company_age' in st.session_state and 'funding_stage' in st.session_state and 'industry' in st.session_state and 'funding_amount' in st.session_state and 'number_of_articles' in st.session_state:
-    company_age = st.session_state.company_age
-    company_region = st.session_state.company_region
-    last_funding = st.session_state.last_funding
+#Check if entry values are existent in session state
+if 'founded_date' in st.session_state and 'next_stage_funding' in st.session_state and 'industry' in st.session_state:
+    location = st.session_state.location
+    location_city = st.session_state.location_city
+    company_size = st.session_state.company_size
+    no_founders = st.session_state.no_founders
+    funding_status = st.session_state.funding_status
+    revenue_range = st.session_state.revenue_range
     founded_date = st.session_state.founded_date
-    funding_stage = st.session_state.funding_stage
+    next_stage_funding = st.session_state.next_stage_funding
+    has_debt_financing = st.session_state.has_debt_financing
+    has_grant = st.session_state.has_grant
     industry = st.session_state.industry
-    funding_amount = st.session_state.funding_amount
-    number_of_articles = st.session_state.number_of_articles
-
-    # Beispielhafte Benchmark-Daten
-    benchmark_data = {
-        'Industry': ['Tech', 'Health', 'Finance', 'Education'],
-        'Average Exit Time (Years)': [5, 7, 6, 8],
-        'Success Rate (%)': [60, 70, 65, 55],
-        'Recommended Strategy': ['IPO', 'Acquisition', 'Merger', 'Acquisition']
-    }
-    benchmark_df = pd.DataFrame(benchmark_data)
 
     # Eingabewerte als DataFrame
     input_data = {
         'Industry': [industry],
-        'Average Exit Time (Years)': [company_age],  # Beispiel: Company Age als Proxy für Exit Time
-        'Success Rate (%)': [funding_amount / 10000],  # Beispiel: Funding Amount als Proxy für Success Rate
+        'Average Exit Time (Years)': [(datetime.date.today() - founded_date).days / 365],  # Beispiel: Berechnung der Firmenalter in Jahren
+        'Success Rate (%)': [next_stage_funding / 10000],  # Beispiel: Next Stage Funding als Proxy für Success Rate
         'Recommended Strategy': ['IPO']  # Beispiel: Feste Strategie
     }
     input_df = pd.DataFrame(input_data)
