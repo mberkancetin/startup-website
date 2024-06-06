@@ -23,6 +23,10 @@ st.title("Funding Trends 💰📈")
 
 # Assuming df_final is already loaded in your local environment
 
+#################### DISTRIBUTION OF MONTHS SINCE FOUNDED BY FUNDING TYPE  ############################
+
+# Assuming df_final is already loaded in your local environment
+
 # Update the 'last_funding_type' column to combine all rounds after Series E into "Private Equity"
 df_final['last_funding_type'] = df_final['last_funding_type'].replace(['Series F', 'Series G'], 'Private Equity')
 
@@ -50,6 +54,10 @@ desired_funding_types = {
 # Set a vibrant color palette
 sns.set_palette("bright")
 
+# Highlight specific company data
+your_company_funding_type = 'Seed'
+your_company_months_since_founded = df_final[(df_final['last_funding_type'] == your_company_funding_type)]['months_since_founded'].quantile(0.4)
+
 # Iterate through each funding type and plot the KDE
 for funding_type, short_label in desired_funding_types.items():
     subset = df_final[df_final['last_funding_type'] == funding_type]
@@ -63,6 +71,10 @@ for funding_type, short_label in desired_funding_types.items():
     plt.axvline(median, linestyle='--', color='white', linewidth=1, label='_nolegend_')
     y_pos = plt.ylim()[1] * (0.9 - 0.1 * list(desired_funding_types.keys()).index(funding_type))
     plt.text(median, y_pos, f'{short_label}: {median:.0f} months', rotation=15, verticalalignment='center', color='white')
+
+# Highlight "Your Company" in the Seed Round
+plt.scatter(your_company_months_since_founded, plt.ylim()[1] * 0.5, color='red', s=100, zorder=5, label='Your Company')
+plt.text(your_company_months_since_founded, plt.ylim()[1] * 0.55, 'Your Company', color='red', fontsize=20, rotation=15, ha='left', va='bottom', alpha=0.8)
 
 # Customize the grid lines
 plt.grid(color='white', linestyle='-', linewidth=0.5, alpha=0.3)
