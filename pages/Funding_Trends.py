@@ -23,6 +23,10 @@ st.title("Funding Trends 💰📈")
 
 # Assuming df_final is already loaded in your local environment
 
+#################### DISTRIBUTION OF MONTHS SINCE FOUNDED BY FUNDING TYPE  ############################
+
+# Assuming df_final is already loaded in your local environment
+
 # Update the 'last_funding_type' column to combine all rounds after Series E into "Private Equity"
 df_final['last_funding_type'] = df_final['last_funding_type'].replace(['Series F', 'Series G'], 'Private Equity')
 
@@ -50,6 +54,10 @@ desired_funding_types = {
 # Set a vibrant color palette
 sns.set_palette("bright")
 
+# Highlight specific company data
+your_company_funding_type = 'Seed'
+your_company_months_since_founded = df_final[(df_final['last_funding_type'] == your_company_funding_type)]['months_since_founded'].quantile(0.4)
+
 # Iterate through each funding type and plot the KDE
 for funding_type, short_label in desired_funding_types.items():
     subset = df_final[df_final['last_funding_type'] == funding_type]
@@ -63,6 +71,10 @@ for funding_type, short_label in desired_funding_types.items():
     plt.axvline(median, linestyle='--', color='white', linewidth=1, label='_nolegend_')
     y_pos = plt.ylim()[1] * (0.9 - 0.1 * list(desired_funding_types.keys()).index(funding_type))
     plt.text(median, y_pos, f'{short_label}: {median:.0f} months', rotation=15, verticalalignment='center', color='white')
+
+# Highlight "Your Company" in the Seed Round
+plt.scatter(your_company_months_since_founded, plt.ylim()[1] * 0.5, color='red', s=100, zorder=5, label='Your Company')
+plt.text(your_company_months_since_founded, plt.ylim()[1] * 0.55, 'Your Company', color='red', fontsize=20, rotation=15, ha='left', va='bottom', alpha=0.8)
 
 # Customize the grid lines
 plt.grid(color='white', linestyle='-', linewidth=0.5, alpha=0.3)
@@ -105,25 +117,24 @@ df_funding_filtered = df_final.dropna(subset=['total_funding_usd'])
 # Convert the total funding to millions of dollars
 df_funding_filtered['total_funding_usd'] = df_funding_filtered['total_funding_usd'] / 1e6
 
-# List of rounds to consider: Series A, Series B, Series C
-considered_rounds = ['Series A', 'Series B', 'Series C']
+# List of rounds to consider: Pre-Seed, Seed, Series A
+considered_rounds = ['Pre-Seed', 'Seed', 'Series A']
 df_funding_filtered['funding_category'] = df_funding_filtered['last_funding_type'].apply(lambda x: x if x in considered_rounds else np.nan)
 df_funding_filtered = df_funding_filtered.dropna(subset=['funding_category'])
 
-# Define a hypothetical company
-hypothetical_company_funding = {
-    'funding_category': 'Series B',
-    'total_funding_usd': 50  # Example value in millions
-}
+# Define a hypothetical company in the Seed round at the 40th percentile
+your_company_percentile = 0.4
+your_company_funding_category = 'Seed'
+your_company_total_funding = df_funding_filtered[df_funding_filtered['funding_category'] == your_company_funding_category]['total_funding_usd'].quantile(your_company_percentile)
 
 # Create the box plot
 plt.figure(figsize=(12, 6))
 
 # Define the custom color palette with transparency
 colors = {
-    'Series A': '#ff989680',  # Other color
-    'Series B': '#98df8a80',  # Color for 'Your Company'
-    'Series C': '#ff989680'   # Other color
+    'Pre-Seed': '#ff989680',  # Other color
+    'Seed': '#98df8a80',      # Color for 'Your Company'
+    'Series A': '#ff989680'   # Other color
 }
 
 # Draw the box plots
@@ -138,11 +149,11 @@ for patch in box_plot.artists:
     patch.set_facecolor((r, g, b, 0.5))  # Set alpha to 0.5 for transparency
 
 # Highlight the hypothetical company
-plt.scatter(hypothetical_company_funding['funding_category'], hypothetical_company_funding['total_funding_usd'], color='red', s=100, zorder=5, alpha=0.8)
-plt.text(hypothetical_company_funding['funding_category'], hypothetical_company_funding['total_funding_usd'] * 1.4, ' Your Company', color='red', fontsize=19, rotation=15, ha='left', va='bottom', alpha=0.8)
+plt.scatter(your_company_funding_category, your_company_total_funding, color='red', s=100, zorder=5, alpha=0.8)
+plt.text(your_company_funding_category, your_company_total_funding * 1.04, ' Your Company', color='red', fontsize=12, rotation=15, ha='left', va='bottom', alpha=0.8)
 
-# Set the y-axis limit to 360 million USD
-plt.ylim(0, 270)
+# Set the y-axis limit
+plt.ylim(0, df_funding_filtered['total_funding_usd'].max() * 1.1)
 
 # Customize the grid lines to be slightly dimmer but still visible
 plt.grid(color='white', linestyle='-', linewidth=0.5, alpha=0.5)
@@ -150,7 +161,7 @@ plt.grid(color='white', linestyle='-', linewidth=0.5, alpha=0.5)
 # Set the labels and title
 plt.xlabel('Funding Round')
 plt.ylabel('Total Funding (USD in Millions)')
-plt.title('Total Funding Raised by Companies in Series B')
+plt.title('Total Funding Raised by Companies in Pre-Seed, Seed, and Series A')
 
 # Show the figure in Streamlit
 st.pyplot(plt)
