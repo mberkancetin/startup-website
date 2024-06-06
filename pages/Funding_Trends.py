@@ -150,10 +150,10 @@ for patch in box_plot.artists:
 
 # Highlight the hypothetical company
 plt.scatter(your_company_funding_category, your_company_total_funding, color='red', s=100, zorder=5, alpha=0.8)
-plt.text(your_company_funding_category, your_company_total_funding * 1.04, ' Your Company', color='red', fontsize=12, rotation=15, ha='left', va='bottom', alpha=0.8)
+plt.text(your_company_funding_category, your_company_total_funding * 2.1, ' Your Company', color='red', fontsize=20, rotation=15, ha='left', va='bottom', alpha=0.8)
 
 # Set the y-axis limit
-plt.ylim(0, df_funding_filtered['total_funding_usd'].max() * 1.1)
+plt.ylim(0, df_funding_filtered['total_funding_usd'].max() * 0.1)
 
 # Customize the grid lines to be slightly dimmer but still visible
 plt.grid(color='white', linestyle='-', linewidth=0.5, alpha=0.5)
@@ -169,19 +169,21 @@ st.pyplot(plt)
 
 ######################### Funding Ratio from One Round to the Next #####################
 
+######################### Funding Ratio from One Round to the Next #####################
+
 # Set the style
 plt.style.use('dark_background')
 
 # Assuming df_final is already loaded in your local environment
 
-# Filter for Series B companies
-df_series_b = df_final[df_final['last_funding_type'] == 'Series B']
+# Filter for Seed Round companies
+df_seed = df_final[df_final['last_funding_type'] == 'Seed']
 
 # Define the columns for funding ratios
 funding_ratios = ['seed_to_pre_ratio', 'a_to_seed_ratio', 'b_to_a_ratio', 'c_to_b_ratio', 'd_to_c_ratio', 'e_to_d_ratio']
 
 # Melt the dataframe to get all ratios in one column
-df_ratios = df_series_b[funding_ratios].melt(var_name='round', value_name='ratio')
+df_ratios = df_seed[funding_ratios].melt(var_name='round', value_name='ratio')
 
 # Drop NaN values and zero values
 df_ratios = df_ratios.dropna(subset=['ratio'])
@@ -197,8 +199,8 @@ std_dev = df_ratios['ratio'].std()
 one_std_dev = mean_value + std_dev
 two_std_dev = mean_value + 2 * std_dev
 
-# Define a hypothetical company ratio
-hypothetical_ratio = 3.5  # Example value
+# Define a hypothetical company ratio at the 40th percentile
+hypothetical_ratio = df_ratios['ratio'].quantile(0.4)  # Example value
 
 # Collect all statistics
 stats = {
@@ -206,8 +208,8 @@ stats = {
     '25th %': percentile_25,
     'Median': median_value,
     '75th %': percentile_75,
-    'Mean + 1SD': one_std_dev,
-    'Mean + 2SD': two_std_dev,
+    'Mean + 1 SD': one_std_dev,
+    'Mean + 2 SD': two_std_dev,
     'Your Company': hypothetical_ratio
 }
 
@@ -220,10 +222,11 @@ plt.figure(figsize=(12, 6))
 # Define the colors
 company_color = '#98df8a80'  # Color for 'Your Company'
 other_color = '#ff989680'    # Color for all other statistics
+highlight_color = 'red'      # Color for highlighting "Your Company"
 
 bars = plt.bar(sorted_stats.keys(), sorted_stats.values(),
                color=[company_color if k == 'Your Company' else other_color for k in sorted_stats.keys()],
-               edgecolor='#ffffff40')  # Adjust the edge color for better visibility
+               edgecolor=[highlight_color if k == 'Your Company' else '#ffffff40' for k in sorted_stats.keys()])  # Adjust the edge color for better visibility
 
 # Add text labels on top of the bars
 for bar in bars:
@@ -232,10 +235,10 @@ for bar in bars:
 
 # Labels and title
 plt.ylabel('Funding Ratio')
-plt.title('Funding Ratio from One Round to the Next (Series B Companies)')
+plt.title('Funding Ratio from One Round to the Next (Seed Round Companies)')
 
 # Make the grid lines fainter
 plt.grid(True, which='both', linestyle='--', linewidth=0.5, color='gray', alpha=0.3)
 
-# Show the figure in Streamlit
+# Show the plot in Streamlit
 st.pyplot(plt)
