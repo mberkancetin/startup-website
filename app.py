@@ -107,11 +107,11 @@ def submitted_fun():
 
     with colx:
         if st.button("Industry Benchmarks"):
-            st.switch_page("pages/Benchmarks.py")
+            st.switch_page("pages/IndustryBenchmarks.py")
 
     with coly:
-        if st.button("Funding Trends"):
-            st.switch_page("pages/Funding_Trends.py")
+        if st.button("Company Insights"):
+            st.switch_page("pages/CompanyInsights.py")
 
 
 # Initialize session state variables if not already set
