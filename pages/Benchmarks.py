@@ -5,6 +5,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
 
+plt.style.use('dark_background')
+
+# Daten laden
 df_final = pd.read_csv("/root/code/mberkancetin/startup-website/raw_data/X_y_data3.csv")
 
 with open("/root/code/mberkancetin/startup-website/style.css") as f:
@@ -12,12 +15,9 @@ with open("/root/code/mberkancetin/startup-website/style.css") as f:
 
 st.title("Industry Benchmarks 🏭")
 
-
 # Beispiel für Benchmarking-Diagramme
 st.write("Diagrams here")
 
-
-#Check if entry values are existent in session state
 if 'revenue_range' in st.session_state and 'industry' in st.session_state and 'total_funding' in st.session_state and 'company_size' in st.session_state:
     location = st.session_state.location
     location_city = st.session_state.location_city
@@ -31,7 +31,6 @@ if 'revenue_range' in st.session_state and 'industry' in st.session_state and 't
     has_grant = st.session_state.has_grant
     industry = st.session_state.industry
 
-
     input_data = {
         'Metric': ['Revenue Range', 'Industry', 'Total Funding', 'Company Size'],
         'Value': [revenue_range, industry, total_funding, company_size]
@@ -40,20 +39,19 @@ if 'revenue_range' in st.session_state and 'industry' in st.session_state and 't
 
     st.write("Your comparison with the industry benchmark")
 
-    # Balkendiagramm
-    fig = px.bar(benchmark_df, x=benchmark_df.index, y=['Revenue Range', 'Industry', 'Total Funding', 'Company Size'],
+    # Bar Chart
+    fig = px.bar(df_final, x=df_final.index, y=['revenue_range', 'industry', 'total_funding_usd', 'no_employees'],
                  title='Benchmark Data', labels={'value': 'Value', 'index': 'Benchmark Index'})
     fig.add_scatter(x=input_df['Metric'], y=input_df['Value'], mode='markers+text', text=input_df['Value'], textposition='top center', name='Input Data')
     st.plotly_chart(fig, use_container_width=True)
 
-    # Liniendiagramm
-    fig2 = px.line(benchmark_df, x=benchmark_df.index, y=['Revenue Range', 'Industry', 'Total Funding', 'Company Size'],
+    # Line Chart
+    fig2 = px.line(df_final, x=df_final.index, y=['revenue_range', 'industry', 'total_funding_usd', 'no_employees'],
                    title='Benchmark Data Over Time', labels={'value': 'Value', 'index': 'Benchmark Index'})
     fig2.add_scatter(x=input_df['Metric'], y=input_df['Value'], mode='markers+text', text=input_df['Value'], textposition='top center', name='Input Data')
     st.plotly_chart(fig2, use_container_width=True)
 
-
-#Save variables in session state
+    # Save variables in session state
     location = st.session_state.location
     location_city = st.session_state.location_city
     company_size = st.session_state.company_size
@@ -66,15 +64,9 @@ if 'revenue_range' in st.session_state and 'industry' in st.session_state and 't
     has_grant = st.session_state.has_grant
     industry = st.session_state.industry
 else:
-    st.warning("Please enter the required information on the input")
-
-
+    st.warning("Please enter the required information on the input page")
 
 ############################## Mean Growth Ratio by Industry Group and Funding Stage############
-
-
-# Set the style
-plt.style.use('fivethirtyeight')
 
 # List of funding ratio columns in chronological order
 funding_ratios = ['seed_to_pre_ratio', 'a_to_seed_ratio', 'b_to_a_ratio', 'c_to_b_ratio', 'd_to_c_ratio', 'e_to_d_ratio']
@@ -91,7 +83,7 @@ melted_df['Funding Stage'] = pd.Categorical(melted_df['Funding Stage'], categori
 # Create the heat map
 plt.figure(figsize=(12, 8))
 heatmap_data = melted_df.pivot(index='industry_groups', columns='Funding Stage', values='Mean Growth Ratio')
-ax = sns.heatmap(heatmap_data, annot=True, cmap='YlGnBu', cbar_kws={'label': 'Mean Growth Ratio'}, linewidths=.5)
+ax = sns.heatmap(heatmap_data, annot=True, cmap='viridis', cbar_kws={'label': 'Mean Growth Ratio'}, linewidths=.5)
 
 # Add a marker for "Your Company"
 your_company_industry = 'Energy and Natural Resources'
@@ -114,11 +106,7 @@ plt.xticks(rotation=45)
 # Show the figure in Streamlit
 st.pyplot(plt)
 
-
-####################### Mean total funding by industry group and funding strage ###########################
-
-# Set the style
-plt.style.use('fivethirtyeight')
+####################### Mean total funding by industry group and funding stage ###########################
 
 # List of funding ratio columns in chronological order
 funding_stages = ['preseed_fund', 'seed_fund', 'series_a_fund', 'series_b_fund', 'series_c_fund', 'series_d_fund', 'series_e_fund']
@@ -134,11 +122,11 @@ melted_df['Funding Stage'] = pd.Categorical(melted_df['Funding Stage'], categori
 
 # Create the heat map
 plt.figure(figsize=(12, 8))
-heatmap_data = melted_df.pivot('industry_groups', 'Funding Stage', 'Mean Total Funding')
-ax = sns.heatmap(heatmap_data, annot=True, fmt='.1f', cmap='YlGnBu', cbar_kws={'label': 'Mean Total Funding (USD)'}, linewidths=.5)
+heatmap_data = melted_df.pivot(index='industry_groups', columns='Funding Stage', values='Mean Total Funding')
+ax = sns.heatmap(heatmap_data, annot=True, fmt='.1f', cmap='viridis', cbar_kws={'label': 'Mean Total Funding (USD)'}, linewidths=.5)
 
 # Add a marker for "Your Company"
-your_company_industry = 'Health and Biotechnology'
+your_company_industry = 'Healthcare and Biotechnology'
 your_company_stage = 'series_b_fund'
 plt.scatter(funding_stages.index(your_company_stage) + 0.5,
             heatmap_data.index.get_loc(your_company_industry) + 0.2,
@@ -155,17 +143,10 @@ plt.title('Mean Total Funding by Industry Group and Funding Stage')
 # Adjust x-axis labels for better readability
 plt.xticks(rotation=45)
 
-# Save the figure
-#plt.savefig('/Users/andreas/Desktop/03 - Le Wagon/Data ViZ/mean_total_funding_heat_map_with_your_company.png', dpi=300, bbox_inches='tight')
-
-# Show the figure
+# Show the figure in Streamlit
 st.pyplot(plt)
 
 #################################### Estimated Company Valuation for Companies NEEDS TO BE UPDATED - STILL FOR REVENUE #################
-
-
-# Set the style
-plt.style.use('fivethirtyeight')
 
 # Define the revenue ranges in ascending order
 revenue_ranges = ['$1M to $10M', 'Less than $1M', '$10M to $50M', '$50M to $100M', '$100M to $500M', '$500M to $1B', '$1B to $10B', '$10B+']
@@ -203,15 +184,10 @@ ax.text(theta[your_company_index] + np.diff(theta)[0] / 2, 1.25, 'Your Company',
 plt.title('Estimated Revenue Range for Companies', fontsize=15)
 plt.tight_layout()
 
-# Save the figure
-#plt.savefig('/Users/andreas/Desktop/03 - Le Wagon/Data ViZ/angular_gauge_chart.png', dpi=300, bbox_inches='tight')
-
 # Show the figure
-plt.show()
+st.pyplot(plt)
 
-
-#Background Picture for more swag
-
+# Background Picture for more swag
 st.markdown(
     """
     <style>
