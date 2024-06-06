@@ -203,7 +203,7 @@ st.markdown(
     """
     <style>
     .stApp {
-        background: linear-gradient(to bottom, rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 1)), url('https://pplx-res.cloudinary.com/image/upload/v1717425816/user_uploads/rsbszhwcj/orb.jpg');
+        background: linear-gradient(to bottom, rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 1)));
         background-size: cover;
         background-repeat: no-repeat;
         background-attachment: fixed;
@@ -225,7 +225,7 @@ st.markdown(
     """
     <style>
     .stApp {
-        background: linear-gradient(to bottom, rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 1)), url('https://pplx-res.cloudinary.com/image/upload/v1717425816/user_uploads/rsbszhwcj/orb.jpg');
+        background: linear-gradient(to bottom, rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 1)));
         background-size: cover;
         background-repeat: no-repeat;
         background-attachment: fixed;
@@ -234,3 +234,17 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
+
+colt, colu, colv = st.columns(3)
+
+with colt:
+    if st.button("Back to Predict"):
+        st.switch_page("app.py")
+
+with colu:
+    if st.button("Company Benchmarks"):
+        st.switch_page("pages/CompanyInsights.py")
+
+with colv:
+    if st.button("End the Session"):
+         st.switch_page("pages/SessionEnd.py")

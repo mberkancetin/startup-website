@@ -10,10 +10,9 @@ with open("style.css") as f:
 
 st.write("# StartOrb")
 
-tab1, tab2, tab3, tab4, tab5 = st.tabs([":tophat: About StartOrb ",
-                                  ":question: The Lore       ",
-                                  ":crystal_ball: The Crystal Orb",
-                                  ":magic_wand: The Valar      ",
+tab1, tab2, tab3, tab5 = st.tabs([":tophat: About StartOrb ",
+                                  ":magic_wand: The Lore       ",
+                                  ":crystal_ball: Palantir    ",
                                   ":sparkles: Let's Predict  "])
 
 tab1.markdown('''
@@ -33,7 +32,7 @@ tab2.markdown("""
             :radio_button: Public entities such as government-backed VCs or state subsidy programs waste public capital due to poor start-up selection and lack of expertise in identifying emerging trends
               """)
 
-tab3.subheader("Methodology")
+tab3.subheader("Palantir: The Crystal Orb")
 
 tab3.markdown("""
             :radio_button: Crunchbase and Dealroom are comprehensive databases that provide structured and curated data in the domain of startups, venture capital and entrepreneurship
@@ -44,15 +43,6 @@ tab3.markdown("""
               :radio_button: As for the model, we used two distinctive Neural Network models to identify \n
               (1) The success prediction score in percentage, \n
               (2) The estimated funding that the given company potentially receive if it goes to the next funding round
-              """)
-
-tab4.subheader("Acknowledgements")
-
-tab4.markdown("""
-              Thanks for the people making this data science project possible:
-              \n
-              :radio_button: Batch Managers and Teaching Assistants \n
-              Their continous support and assistance is much appreciated
               """)
 
 @st.experimental_dialog("The Orb's Verdict", width="large")
@@ -179,8 +169,10 @@ def update_success_prediction():
     st.session_state.success_prediction = st.session_state.success_prediction
 
 # User input form
-founded_date = tab5.date_input('Year Your Company Was Founded:', value=st.session_state.founded_date, key="founded_date_input", on_change=update_founded_date)
-location = tab5.selectbox("Select Your Company’s Headquarters Location (Region):", [
+
+cola, colb = tab5.columns(2)
+founded_date = cola.date_input('Year Your Company Was Founded:', value=st.session_state.founded_date, key="founded_date_input", on_change=update_founded_date)
+location = cola.selectbox("Select Your Company’s Headquarters Location (Region):", [
     'Baden-Wurttemberg', 'Bayern', 'Berlin', 'Brandenburg', 'Bremen', 'Hamburg', 'Hessen',
     'Mecklenburg-Vorpommern', 'Niedersachsen', 'Nordrhein-Westfalen', 'Rheinland-Pfalz',
     'Saarland', 'Sachsen', 'Sachsen-Anhalt', 'Schleswig-Holstein', 'Thuringen'
@@ -418,7 +410,7 @@ city_dict = {'Hessen': ['Sulzbach',
                         'Stralsund'],
             'Bremen': ['Bremen']}
 # location_city = st.selectbox("Select location", city_dict[location])
-location_city = tab5.selectbox("Select Your Company’s Headquarters Location (City):", city_dict[location], key="location_city_input", on_change=update_location_city)
+location_city = cola.selectbox("Select Your Company’s Headquarters Location (City):", city_dict[location], key="location_city_input", on_change=update_location_city)
 
 german_cities = {
     'Pullach': {'lat': 48.0675, 'lon': 11.5231},
@@ -659,17 +651,17 @@ german_cities = {
 lat_city = float(german_cities[st.session_state.location_city]["lat"])
 lon_city = float(german_cities[st.session_state.location_city]["lon"])
 
-company_size = tab5.selectbox('Choose Your Company Size Category:', ['11-50', '51-100', '101-250',
+company_size = colb.selectbox('Choose Your Company Size Category:', ['11-50', '51-100', '101-250',
                                                     '251-500', '501-1000', '1001-5000',
                                                     '5001-10000', '10001+'], key="company_size_input", on_change=update_company_size)
-no_founders = tab5.number_input("How Many Founders Does Your Company Have?", min_value=1, step=1, key="no_founders_input", on_change=update_no_founders)
-funding_status = tab5.selectbox("What’s the Latest Investment Stage Your Company Has Achieved?", ["Pre-Seed", "Seed",
+no_founders = colb.number_input("How Many Founders Does Your Company Have?", min_value=1, step=1, key="no_founders_input", on_change=update_no_founders)
+funding_status = colb.selectbox("The Latest Investment Stage", ["Pre-Seed", "Seed",
                                                                         "Series A", "Series B",
                                                                         "Series C", "Further Stages"], key="funding_status_input", on_change=update_funding_status)
-revenue_range = tab5.selectbox('Select Your Company’s Current Annual Revenue Range:', ['Less than $1M', '$1M to $10M', '$10M to $50M', '$50M to $100M',
+revenue_range = colb.selectbox('Select Your Company’s Current Annual Revenue Range:', ['Less than $1M', '$1M to $10M', '$10M to $50M', '$50M to $100M',
                                                     '$100M to $500M', '$500M to $1B', '$1B to $10B',
                                                     '$10B+'], key="revenue_range_input", on_change=update_revenue_range)
-industry = tab5.selectbox('Choose the Industry Your Company Operates In:', ['Energy and Natural Resources', 'Technology and Software',
+industry = cola.selectbox('Choose the Industry Your Company Operates In:', ['Energy and Natural Resources', 'Technology and Software',
                                             'Business Services', 'Community and Lifestyle',
                                             'Finance and Payments', 'Other', 'Hardware and Electronics',
                                             'Consumer Products', 'Manufacturing and Industry', 'Media and Entertainment',
@@ -681,8 +673,9 @@ industry = tab5.selectbox('Choose the Industry Your Company Operates In:', ['Ene
 tab5.markdown('''
             List Any Additional Sources of Financing Your Company Has Secured:
             ''')
-has_debt_financing = tab5.checkbox('Debt Financing', key="has_debt_financing_input", on_change=update_has_debt_financing)
-has_grant = tab5.checkbox('Grant', key="has_grant_input", on_change=update_has_grant)
+colc, cold = tab5.columns(2)
+has_debt_financing = colc.checkbox('Debt Financing', key="has_debt_financing_input", on_change=update_has_debt_financing)
+has_grant = cold.checkbox('Grant', key="has_grant_input", on_change=update_has_grant)
 
 submitted = tab5.button("Submit")
 if submitted:

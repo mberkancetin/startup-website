@@ -245,3 +245,18 @@ plt.grid(True, which='both', linestyle='--', linewidth=0.5, color='gray', alpha=
 
 # Show the plot in Streamlit
 tab3.pyplot(plt)
+
+
+colt, colu, colv = st.columns(3)
+
+with colt:
+    if st.button("Back to Predict"):
+        st.switch_page("app.py")
+
+with colu:
+    if st.button("Industry Benchmarks"):
+        st.switch_page("pages/IndustryBenchmarks.py")
+
+with colv:
+    if st.button("End the Session"):
+         st.switch_page("pages/SessionEnd.py")
