@@ -338,7 +338,7 @@ if 'founded_date' in st.session_state and 'next_stage_funding' in st.session_sta
         x=input_df['Industry'],
         y=input_df['Success Rate (%)'],
         mode='markers+text',
-        text="Your company:<br>60%",
+        text=f"Your company:<br>{success_prediction}%",
         textposition='top center',
         name='Your company',
         marker=dict(color='red'),
