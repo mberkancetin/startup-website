@@ -15,7 +15,7 @@ df_final = pd.read_csv("raw_data/X_y_data3.csv")
 with open("style.css") as f: # Benedikt's tmp comment: /code/mberkancetin/startup-website/
     st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
-st.write("## Exit Strategies  🚀 ")
+st.write("## Industry Benchmarks  🚀 ")
 tab0, tab1, tab2, tab3 = st.tabs(["Map 🗺️", "Time to Exit by Industry   ",
                     "Probability of Exit by Industry   ",
                     "Exit recommendation           "
