@@ -28,7 +28,7 @@ tab0, tab2, tab1, tab3 = st.tabs(["Map 🗺️",
 benchmark_data = {
     'Industry': ['Tech', 'Healthcare', 'Finance', 'Retail', 'Energy & Natural<br>Resources'],
     'Average Exit Time (Years)': [8, 10, 7, 12, 10],
-    'Success Rate (%)': [60, 30, 25, 40, 75]
+    'Success Rate (%)': [40, 30, 25, 30, 45]
 }
 benchmark_df = pd.DataFrame(benchmark_data)
 
@@ -296,7 +296,7 @@ if 'founded_date' in st.session_state and 'next_stage_funding' in st.session_sta
         textposition='top center',
         #name='Your company',
         marker=dict(color='red'),
-        textfont=dict(color='white'),
+        textfont=dict(color='white', size=16),
         showlegend=False
     )
 
@@ -340,10 +340,10 @@ if 'founded_date' in st.session_state and 'next_stage_funding' in st.session_sta
         y=input_df['Success Rate (%)'],
         mode='markers+text',
         text=f"Your company:<br>{success_prediction}%",
-        textposition='top center',
+        textposition='bottom center',
         name='Your company',
         marker=dict(color='red'),
-        textfont=dict(color='white', size=12),
+        textfont=dict(color='white', size=16),
         showlegend=False
     )
     #BENEDIKT: ADDING HORIZONTAL AND VERTICAL LINES FIG 2 START
