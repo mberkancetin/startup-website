@@ -17,32 +17,32 @@ tab1, tab2, tab3, tab5 = st.tabs([":tophat: About StartOrb ",
 
 tab1.markdown('''
             ## Unlocking Tomorrow's Success Today
-            Harness the Power of Data to Illuminate Your Startup Journey
+            ##### Harness the Power of Data to Illuminate Your Startup Journey
 ''')
 tab1.image('images/orb.gif')
 
-tab2.subheader("Market and Social Perspectives")
+tab2.subheader("Market and Social Perspectives", divider="rainbow")
 tab2.markdown("""
-            :radio_button: 9 out of 10 Start-Ups fail and go bankrupt!
+            #### :radio_button: 9 out of 10 Start-Ups fail and go bankrupt!
 
-            :radio_button: Private and public investors loose millions due to misallocating funds, which therefore limits funding for viable companies.
+            #### :radio_button: Private and public investors loose millions due to misallocating funds, which therefore limits funding for viable companies.
 
-            :radio_button: Nations with higher startup success are more competitive, attract more talent and have strong economic growth (Think of Meta, Google etc.)
+            #### :radio_button: Nations with higher startup success are more competitive, attract more talent and have strong economic growth (Think of Meta, Google etc.)
 
-            :radio_button: Public entities such as government-backed VCs or state subsidy programs waste public capital due to poor start-up selection and lack of expertise in identifying emerging trends
+            #### :radio_button: Public entities such as government-backed VCs or state subsidy programs waste public capital due to poor start-up selection and lack of expertise in identifying emerging trends
               """)
 
-tab3.subheader("Palantir: The Crystal Orb")
+tab3.subheader("Palantir: The Crystal Orb", divider="rainbow")
 
 tab3.markdown("""
-            :radio_button: Crunchbase and Dealroom are comprehensive databases that provide structured and curated data in the domain of startups, venture capital and entrepreneurship
+            #### :radio_button: Crunchbase and Dealroom are comprehensive databases that provide structured and curated data in the domain of startups, venture capital and entrepreneurship
 \n
 """)
 
 tab3.markdown("""
-              :radio_button: As for the model, we used two distinctive Neural Network models to identify \n
-              (1) The success prediction score in percentage, \n
-              (2) The estimated funding that the given company potentially receive if it goes to the next funding round
+              #### :radio_button: As for the model, we used two distinctive Neural Network models to identify \n
+              #### (1) The success prediction score in percentage, \n
+              #### (2) The estimated funding that the given company potentially receive if it goes to the next funding round
               """)
 
 @st.experimental_dialog("The Orb's Verdict", width="large")

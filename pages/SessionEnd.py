@@ -11,6 +11,7 @@ st.write("# StartOrb")
 
 st.image('images/saruman.gif', use_column_width=True)
 
+st.write("")
 
 st.markdown(
     f"""
