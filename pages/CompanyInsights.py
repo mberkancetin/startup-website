@@ -73,11 +73,11 @@ for funding_type, short_label in desired_funding_types.items():
     median = subset['months_since_founded'].median()
     plt.axvline(median, linestyle='--', color='white', linewidth=1, label='_nolegend_')
     y_pos = plt.ylim()[1] * (0.9 - 0.1 * list(desired_funding_types.keys()).index(funding_type))
-    plt.text(median, y_pos, f'{short_label}: {median:.0f} months', rotation=15, verticalalignment='center', color='white')
+    plt.text(median, y_pos, f'{short_label}: {median:.0f} mos.', rotation=15, verticalalignment='center', fontsize=16, color='white')
 
 # Highlight "Your Company" in the Seed Round
 plt.scatter(your_company_months_since_founded, plt.ylim()[1] * 0.5, color='red', s=100, zorder=5, label='Your Company')
-plt.text(your_company_months_since_founded, plt.ylim()[1] * 0.55, 'Your Company', color='red', fontsize=20, rotation=15, ha='left', va='bottom', alpha=0.8)
+plt.text(your_company_months_since_founded, plt.ylim()[1] * 0.55, 'Your Company', color='red', fontsize=24, rotation=15, ha='left', va='bottom', alpha=0.8)
 
 # Customize the grid lines
 plt.grid(color='white', linestyle='-', linewidth=0.5, alpha=0.3)
@@ -87,9 +87,9 @@ legend = plt.legend(title='Funding Type', facecolor='white', edgecolor='white')
 legend.get_frame().set_facecolor('black')
 
 # Customize the plot labels and title
-plt.title('Startups Lifecycle by Funding Round', color='white')
-plt.xlabel('Months Since Founded', color='white')
-plt.ylabel('Number of Companies', color='white')
+plt.title('Startups Lifecycle by Funding Round', fontsize=26, color='white')
+plt.xlabel('Months Since Founded', fontsize=20, color='white')
+plt.ylabel('Number of Companies', fontsize=20, color='white')
 plt.xticks(color='white')
 plt.yticks([])  # Remove y-axis ticks
 
@@ -162,9 +162,9 @@ plt.ylim(0, df_funding_filtered['total_funding_usd'].max() * 0.1)
 plt.grid(color='white', linestyle='-', linewidth=0.5, alpha=0.5)
 
 # Set the labels and title
-plt.xlabel('Funding Round')
-plt.ylabel('Total Funding (USD in Millions)')
-plt.title('Total Funding Raised by Companies in Pre-Seed, Seed, and Series A')
+plt.xlabel('Funding Round', fontsize=20,)
+plt.ylabel('Total Funding (USD in Millions)', fontsize=20,)
+plt.title('Total Funding Raised by Companies in Pre-Seed, Seed, and Series A', fontsize=20,)
 
 # Show the figure in Streamlit
 tab2.pyplot(plt)
@@ -237,8 +237,8 @@ for bar in bars:
     plt.text(bar.get_x() + bar.get_width() / 2.0, height, f'{height:.2f}', ha='center', va='bottom', fontsize=10)
 
 # Labels and title
-plt.ylabel('Funding Ratio')
-plt.title('Funding Ratio from One Round to the Next (Seed Round Companies)')
+plt.ylabel('Funding Ratio', fontsize=20,)
+plt.title('Funding Ratio from One Round to the Next (Seed Round Companies)', fontsize=20,)
 
 # Make the grid lines fainter
 plt.grid(True, which='both', linestyle='--', linewidth=0.5, color='gray', alpha=0.3)

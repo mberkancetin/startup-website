@@ -16,8 +16,9 @@ with open("style.css") as f: # Benedikt's tmp comment: /code/mberkancetin/startu
     st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
 st.write("## Industry Benchmarks  🚀 ")
-tab0, tab1, tab2, tab3 = st.tabs(["Map 🗺️", "Time to Exit by Industry   ",
-                    "Probability of Exit by Industry   ",
+tab0, tab2, tab1, tab3 = st.tabs(["Map 🗺️",
+                    "Probability of Closing Next Round by Industry   ",
+                    "Time to Exit by Industry   ",
                     "Exit recommendation           "
                     ])
 
@@ -27,7 +28,7 @@ tab0, tab1, tab2, tab3 = st.tabs(["Map 🗺️", "Time to Exit by Industry   ",
 benchmark_data = {
     'Industry': ['Tech', 'Healthcare', 'Finance', 'Retail', 'Energy & Natural<br>Resources'],
     'Average Exit Time (Years)': [8, 10, 7, 12, 10],
-    'Success Rate (%)': [60, 30, 25, 40, 75]
+    'Success Rate (%)': [40, 30, 25, 30, 45]
 }
 benchmark_df = pd.DataFrame(benchmark_data)
 
@@ -215,7 +216,7 @@ cbar.outline.set_edgecolor('white')
 cbar.set_label('Ecosystem Score', color='white', fontsize=12)
 
 # Add title
-plt.title('Top 10 Cities for Energy and Natural Ressources in Germany', color='white', fontsize=15)
+plt.title('Top Cities for Energy and Natural Ressources in Germany', color='white', fontsize=15)
 
 # Optionally, add labels for each city
 for i, row in tech_software_df.iterrows():
@@ -295,7 +296,7 @@ if 'founded_date' in st.session_state and 'next_stage_funding' in st.session_sta
         textposition='top center',
         #name='Your company',
         marker=dict(color='red'),
-        textfont=dict(color='white'),
+        textfont=dict(color='white', size=16),
         showlegend=False
     )
 
@@ -333,16 +334,16 @@ if 'founded_date' in st.session_state and 'next_stage_funding' in st.session_sta
     tab1.plotly_chart(fig1, use_container_width=True)
 
     # Bar Chart für den Vergleich der Success Rate
-    fig2 = px.bar(benchmark_df, x='Industry', y='Success Rate (%)', title='Probability of successful Exit by Industry')
+    fig2 = px.bar(benchmark_df, x='Industry', y='Success Rate (%)', title='Probability of Closing Next Round by Industry')
     fig2.add_scatter(
         x=input_df['Industry'],
         y=input_df['Success Rate (%)'],
         mode='markers+text',
         text=f"Your company:<br>{success_prediction}%",
-        textposition='top center',
+        textposition='bottom center',
         name='Your company',
         marker=dict(color='red'),
-        textfont=dict(color='white', size=12),
+        textfont=dict(color='white', size=16),
         showlegend=False
     )
     #BENEDIKT: ADDING HORIZONTAL AND VERTICAL LINES FIG 2 START
@@ -471,7 +472,7 @@ with colt:
         st.switch_page("app.py")
 
 with colu:
-    if st.button("Company Benchmarks"):
+    if st.button("Company Insights"):
         st.switch_page("pages/CompanyInsights.py")
 
 with colv:
