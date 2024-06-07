@@ -703,7 +703,7 @@ if submitted:
     url = "https://newmodel-jagyvvkiea-ew.a.run.app/predict"
     response = requests.get(url=url, params=params)
     success_prediction = response.json()["Success Probability"]
-    if success_prediction < 0.6:
+    if success_prediction < 0.8:
         st.session_state.success_prediction = round(success_prediction * 100, 2)
     else:
         st.session_state.success_prediction = round(np.power(success_prediction, np.e) * 100, 2)
